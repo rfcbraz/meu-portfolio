@@ -453,6 +453,20 @@
 
   /* When nav is open */
   .nav-open .nav-links { display: flex; }
+
+  /* Smooth scroll */
+  html { scroll-behavior: smooth; }
+
+  /* Modal / Contact popup */
+  .modal { display: none; position: fixed; inset: 0; z-index: 200; }
+  .modal.show { display: block; }
+  .modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.6); }
+  .modal-content { position: relative; width: min(720px, 92%); margin: 6vh auto; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; z-index: 2; color: var(--text); }
+  .modal-close { position: absolute; right: 0.6rem; top: 0.4rem; background: transparent; border: none; color: var(--muted); font-size: 1.25rem; cursor: pointer; }
+  .modal-content form input, .modal-content form textarea { width: 100%; padding: 0.6rem 0.75rem; margin: 0.5rem 0; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--text); }
+  .modal-content form textarea { min-height: 120px; resize: vertical; }
+  .pre-footer { padding: 1.25rem 3rem; text-align: center; border-top: 1px solid var(--border); }
+  .pre-footer a { color: var(--muted); text-decoration: none; }
 </style>
 </head>
 <body>
@@ -463,11 +477,11 @@
     <span class="hamburger"></span>
   </button>
   <ul class="nav-links" role="menu">
-    <li><a href="#">Skills</a></li>
-    <li><a href="#">Projetos</a></li>
-    <li><a href="#">Sobre</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projetos</a></li>
+    <li><a href="#about">Sobre</a></li>
   </ul>
-  <button class="nav-cta">Contactar</button>
+  <button class="nav-cta" id="contact-btn">Contactar</button>
 </nav>
 
 <div class="hero">
@@ -483,7 +497,7 @@
      A finalizar a licenciatura em Informática, especializado em <strong style="color:var(--text)">desenvolvimento web fullstack</strong> e <strong style="color:var(--text)">aplicações mobile</strong>. Transformo ideias em produtos digitais que funcionam.
   </p>
   <div class="hero-actions">
-    <button class="btn-primary">Ver projetos</button>
+    <a class="btn-primary" href="#projects">Ver projetos</a>
     <button class="btn-ghost">Download CV</button>
   </div>
 </div>
@@ -509,7 +523,7 @@
   </div>
 </div>
 
-<section>
+<section id="skills">
   <div class="section-label">O que faço</div>
   <h2>Skills & especialidades</h2>
   <div class="skills-grid">
@@ -536,7 +550,7 @@
   </div>
 </section>
 
-<section>
+<section id="projects">
   <div class="section-label">Portfolio</div>
   <h2>Projetos em destaque</h2>
   <div class="projects-grid">
@@ -573,7 +587,7 @@
   </div>
 </section>
 
-<section>
+<section id="about">
   <div class="section-label">Sobre mim</div>
   <h2>Quem sou</h2>
   <div class="about-grid">
@@ -603,23 +617,45 @@
   </div>
 </section>
 
-<section>
+<section id="contact">
   <div class="contact-box">
     <div class="section-label" style="text-align:center">Vamos trabalhar juntos</div>
     <h2>Tens um projeto em mente?</h2>
     <p>Estou disponível para projetos freelance — web, mobile ou fullstack. Fala comigo sem compromisso.</p>
     <div class="contact-links">
-      <a class="contact-link" href="mailto:filipebraz@rfcb.pt">✉ filipebraz@rfcb.pt</a>
+      <a class="contact-link email-trigger" href="#" data-email="filipebraz@rfcb.pt">✉ filipebraz@rfcb.pt</a>
       <a class="contact-link" href="#">💼 LinkedIn</a>
       <a class="contact-link" href="#">🐙 GitHub</a>
     </div>
   </div>
 </section>
 
+<div class="pre-footer">
+  <a href="#" class="email-trigger" data-email="filipebraz@rfcb.pt">✉ filipebraz@rfcb.pt</a>
+</div>
+
 <footer>
   <span>© 2025 Filipe Braz</span>
   <span>Feito com código & queijo ☕</span>
 </footer>
+
+<!-- Contact modal -->
+<div id="contact-modal" class="modal" aria-hidden="true">
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
+    <button class="modal-close" aria-label="Fechar">×</button>
+    <h2 id="contact-modal-title">Contactar</h2>
+    <form id="contact-form">
+      <input name="name" placeholder="Nome" required>
+      <input name="email" type="email" placeholder="Email" required>
+      <textarea name="message" placeholder="Mensagem" required></textarea>
+      <div style="display:flex; gap:0.5rem; justify-content:flex-end; margin-top:0.5rem;">
+        <button type="submit" class="btn-primary">Enviar</button>
+        <button type="button" class="btn-ghost modal-close">Fechar</button>
+      </div>
+    </form>
+  </div>
+</div>
 
 <script>
   (function(){
@@ -635,6 +671,52 @@
       if(!nav.classList.contains('nav-open')) return;
       if(!nav.contains(e.target)) { nav.classList.remove('nav-open'); toggle.setAttribute('aria-expanded', 'false'); }
     });
+  })();
+
+  (function(){
+    var contactBtn = document.getElementById('contact-btn');
+    var emailTriggers = document.querySelectorAll('.email-trigger');
+    var modal = document.getElementById('contact-modal');
+    if(!modal) return;
+    var modalCloseButtons = modal.querySelectorAll('.modal-close');
+    var backdrop = modal.querySelector('.modal-backdrop');
+    var form = modal.querySelector('#contact-form');
+
+    function openModal(prefillEmail){
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden','false');
+      var emailInput = modal.querySelector('input[name="email"]');
+      if(prefillEmail && emailInput) emailInput.value = prefillEmail;
+      var nameInput = modal.querySelector('input[name="name"]');
+      if(nameInput) nameInput.focus();
+    }
+    function closeModal(){
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden','true');
+    }
+
+    if(contactBtn) contactBtn.addEventListener('click', function(e){ e.preventDefault(); openModal(); });
+
+    emailTriggers.forEach(function(el){
+      el.addEventListener('click', function(e){ e.preventDefault(); var email = el.dataset.email || ''; openModal(email); });
+    });
+
+    modalCloseButtons.forEach(function(b){ b.addEventListener('click', closeModal); });
+    if(backdrop) backdrop.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+
+    if(form){
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        var formData = new FormData(form);
+        var to = formData.get('email') || 'filipebraz@rfcb.pt';
+        var subject = encodeURIComponent('Contacto via site: ' + (formData.get('name') || ''));
+        var body = encodeURIComponent(formData.get('message') || '');
+        window.location.href = 'mailto:' + to + '?subject=' + subject + '&body=' + body;
+        closeModal();
+      });
+    }
   })();
 </script>
 
