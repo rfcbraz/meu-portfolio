@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const nodemailer = require('nodemailer');
+const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
@@ -29,6 +30,15 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+// simple request logger
+app.use((req, res, next) => {
+  console.log(new Date().toISOString(), req.method, req.url);
+  next();
+});
+
+// enable CORS for development / same-origin requests
+app.use(cors());
+
 app.use(express.json());
 
 app.post('/api/contact', async (req, res) => {
@@ -48,18 +58,31 @@ app.post('/api/contact', async (req, res) => {
   };
 
   try {
-    await transporter.sendMail(mailOptions);
-    res.json({ success: true });
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Contact email sent:', info.messageId || info.response || info);
+    res.json({ success: true, info });
   } catch (error) {
-    console.error('Error sending contact email:', error);
+    console.error('Error sending contact email:', error && error.stack ? error.stack : error);
     res.status(500).json({ success: false, error: 'Failed to send message.' });
   }
+});
+
+// health endpoint for monitoring
+app.get('/health', (req, res) => {
+  res.json({ ok: true, time: new Date().toISOString() });
 });
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+// verify transporter and start server
+transporter.verify().then(() => {
+  app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`);
+    console.log('SMTP transporter verified and ready to send emails.');
+  });
+}).catch(err => {
+  console.error('SMTP transporter verification failed:', err && err.stack ? err.stack : err);
+  process.exit(1);
 });
