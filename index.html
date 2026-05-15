@@ -466,15 +466,6 @@
   .modal-content form input, .modal-content form textarea { width: 100%; padding: 0.6rem 0.75rem; margin: 0.5rem 0; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--text); }
   .modal-content form textarea { min-height: 120px; resize: vertical; }
 </style>
-<script type="text/javascript" src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
-<script>
-  (function(){
-    if(window.emailjs){
-      // Substitua por sua chave pública EmailJS (public key) do dashboard
-      emailjs.init('YOUR_EMAILJS_PUBLIC_KEY');
-    }
-  })();
-</script>
 </head>
 <body id="top">
 
@@ -718,29 +709,29 @@
 
       form.addEventListener('submit', function(e){
         e.preventDefault();
-        if(!window.emailjs){
-          alert('Serviço de envio indisponível. Por favor tente novamente mais tarde.');
-          return;
-        }
 
-        var templateParams = {
-          name: nameInput.value,
-          contact: contactInput.value,
-          subject: subjectInput.value,
-          message: messageInput.value,
-          to_email: 'filipebraz@rfcb.pt'
+        var contactData = {
+          name: nameInput.value.trim(),
+          contact: contactInput.value.trim(),
+          subject: subjectInput.value.trim(),
+          message: messageInput.value.trim()
         };
 
-        // Substitua YOUR_EMAILJS_SERVICE_ID e YOUR_EMAILJS_TEMPLATE_ID pelos IDs do seu EmailJS
-        emailjs.send('YOUR_EMAILJS_SERVICE_ID', 'YOUR_EMAILJS_TEMPLATE_ID', templateParams)
-          .then(function(){
-            alert('Mensagem enviada! Obrigado pelo contacto.');
-            form.reset();
-            closeModal();
-          }, function(error){
-            console.error('EmailJS error:', error);
-            alert('Não foi possível enviar a mensagem. Por favor contacte diretamente filipebraz@rfcb.pt.');
-          });
+        fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(contactData)
+        }).then(function(response){
+          if (!response.ok) throw new Error('Erro no envio');
+          return response.json();
+        }).then(function(data){
+          alert('Mensagem enviada! Obrigado pelo contacto.');
+          form.reset();
+          closeModal();
+        }).catch(function(error){
+          console.error('Contact error:', error);
+          alert('Não foi possível enviar a mensagem. Por favor contacte diretamente filipebraz@rfcb.pt.');
+        });
       });
     }
   })();
