@@ -421,13 +421,48 @@
     color: var(--muted);
     font-size: 0.8rem;
   }
+  /* RESPONSIVE ADJUSTMENTS */
+  .nav-toggle { display: none; background: transparent; border: none; cursor: pointer; }
+  .nav-toggle .hamburger {
+    width: 22px; height: 2px; background: var(--text); display: block; position: relative;
+  }
+  .nav-toggle .hamburger::before, .nav-toggle .hamburger::after {
+    content: '';
+    position: absolute;
+    left: 0; width: 22px; height: 2px; background: var(--text);
+  }
+  .nav-toggle .hamburger::before { top: -7px; }
+  .nav-toggle .hamburger::after { top: 7px; }
+
+  @media (max-width: 860px) {
+    nav { padding: 1rem 1rem; }
+    .logo { font-size: 1rem; }
+    .nav-links { display: none; position: absolute; top: 64px; right: 1rem; background: rgba(10,10,15,0.96); border: 1px solid var(--border); padding: 1rem 1.25rem; border-radius: 12px; flex-direction: column; gap: 0.5rem; }
+    .nav-links li { margin: 0; }
+    .nav-cta { display: none; }
+    .nav-toggle { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 8px; }
+    .hero { padding: 4rem 1rem 2.5rem; }
+    section { padding: 2.5rem 1rem; }
+    .skills-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+    .projects-grid { grid-template-columns: 1fr; }
+    .project-card.featured { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .ticker-inner { gap: 1.5rem; }
+  }
+
+  /* When nav is open */
+  .nav-open .nav-links { display: flex; }
 </style>
 </head>
 <body>
 
 <nav>
   <div class="logo">Filipe Braz</div>
-  <ul class="nav-links">
+  <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
+    <span class="hamburger"></span>
+  </button>
+  <ul class="nav-links" role="menu">
     <li><a href="#">Skills</a></li>
     <li><a href="#">Projetos</a></li>
     <li><a href="#">Sobre</a></li>
@@ -585,6 +620,23 @@
   <span>© 2025 Filipe Braz</span>
   <span>Feito com código & queijo ☕</span>
 </footer>
+
+<script>
+  (function(){
+    var nav = document.querySelector('nav');
+    var toggle = document.querySelector('.nav-toggle');
+    if(!toggle || !nav) return;
+    toggle.addEventListener('click', function(e){
+      e.stopPropagation();
+      var open = nav.classList.toggle('nav-open');
+      toggle.setAttribute('aria-expanded', open);
+    });
+    document.addEventListener('click', function(e){
+      if(!nav.classList.contains('nav-open')) return;
+      if(!nav.contains(e.target)) { nav.classList.remove('nav-open'); toggle.setAttribute('aria-expanded', 'false'); }
+    });
+  })();
+</script>
 
 </body>
 </html>
