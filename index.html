@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131a;
+    --border: rgba(255,255,255,0.08);
+    --accent: #7c5cfc;
+    --accent2: #c084fc;
+    --text: #f0eeff;
+    --muted: #8b85a0;
+    --tag-bg: rgba(124,92,252,0.12);
+    --tag-border: rgba(124,92,252,0.3);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 3rem;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  .logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 0.55rem 1.3rem;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    padding: 6rem 3rem 4rem;
+    max-width: 860px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--tag-bg);
+    border: 1px solid var(--tag-border);
+    border-radius: 100px;
+    padding: 0.35rem 1rem;
+    font-size: 0.8rem;
+    color: var(--accent2);
+    margin-bottom: 2rem;
+  }
+  .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #4ade80;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.04em;
+    margin-bottom: 1.5rem;
+  }
+  h1 .line2 {
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 0.85rem 2rem;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 0.85rem 2rem;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.25); transform: translateY(-1px); }
+
+  /* SCROLL TICKER */
+  .ticker {
+    overflow: hidden;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 0;
+    margin: 2rem 0;
+  }
+  .ticker-inner {
+    display: flex;
+    gap: 3rem;
+    animation: ticker 18s linear infinite;
+    width: max-content;
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .ticker-item {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .ticker-item span { color: var(--accent); margin-right: 3rem; }
+
+  /* SECTION */
+  section {
+    padding: 4rem 3rem;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 2.5rem;
+    line-height: 1.1;
+  }
+
+  /* SKILLS GRID */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .skill-card {
+    background: var(--surface);
+    padding: 1.5rem;
+    transition: background 0.2s;
+  }
+  .skill-card:hover { background: rgba(124,92,252,0.08); }
+
+  .skill-icon {
+    font-size: 1.6rem;
+    margin-bottom: 0.75rem;
+  }
+  .skill-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+  }
+  .skill-desc {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+  .project-card:hover {
+    border-color: rgba(124,92,252,0.4);
+    transform: translateY(-3px);
+  }
+  .project-card.featured {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .project-visual {
+    height: 140px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+  }
+  .project-visual.web { background: linear-gradient(135deg, rgba(124,92,252,0.2), rgba(192,132,252,0.15)); }
+  .project-visual.mobile { background: linear-gradient(135deg, rgba(74,222,128,0.15), rgba(124,92,252,0.1)); }
+  .project-visual.api { background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(124,92,252,0.1)); }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.75rem 0;
+  }
+  .tag {
+    background: var(--tag-bg);
+    border: 1px solid var(--tag-border);
+    color: var(--accent2);
+    font-size: 0.72rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 100px;
+  }
+  .project-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 0.4rem;
+  }
+  .project-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+  .about-text p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+  .about-text p strong { color: var(--text); font-weight: 500; }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.2rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent2);
+  }
+  .stat-label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 0.2rem;
+  }
+
+  /* CONTACT */
+  .contact-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-box::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%;
+    transform: translateX(-50%);
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,92,252,0.15), transparent 70%);
+    pointer-events: none;
+  }
+  .contact-box h2 { margin-bottom: 0.75rem; }
+  .contact-box p {
+    color: var(--muted);
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+    font-weight: 300;
+  }
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 0.65rem 1.4rem;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .contact-link:hover {
+    border-color: rgba(124,92,252,0.5);
+    background: rgba(124,92,252,0.08);
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Filipe Braz</div>
+  <ul class="nav-links">
+    <li><a href="#">Skills</a></li>
+    <li><a href="#">Projetos</a></li>
+    <li><a href="#">Sobre</a></li>
+  </ul>
+  <button class="nav-cta">Contactar</button>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">
+    <div class="dot"></div>
+    Disponível para projetos freelance
+  </div>
+  <h1>
+    Filipe<br>
+    <span class="line2">Braz.</span>
+  </h1>
+  <p class="hero-sub">
+     A finalizar a licenciatura em Informática, especializado em <strong style="color:var(--text)">desenvolvimento web fullstack</strong> e <strong style="color:var(--text)">aplicações mobile</strong>. Transformo ideias em produtos digitais que funcionam.
+  </p>
+  <div class="hero-actions">
+    <button class="btn-primary">Ver projetos</button>
+    <button class="btn-ghost">Download CV</button>
+  </div>
+</div>
+
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">React <span>✦</span></span>
+    <span class="ticker-item">Node.js <span>✦</span></span>
+    <span class="ticker-item">Flutter <span>✦</span></span>
+    <span class="ticker-item">TypeScript <span>✦</span></span>
+    <span class="ticker-item">React Native <span>✦</span></span>
+    <span class="ticker-item">PostgreSQL <span>✦</span></span>
+    <span class="ticker-item">REST APIs <span>✦</span></span>
+    <span class="ticker-item">Git <span>✦</span></span>
+    <span class="ticker-item">React <span>✦</span></span>
+    <span class="ticker-item">Node.js <span>✦</span></span>
+    <span class="ticker-item">Flutter <span>✦</span></span>
+    <span class="ticker-item">TypeScript <span>✦</span></span>
+    <span class="ticker-item">React Native <span>✦</span></span>
+    <span class="ticker-item">PostgreSQL <span>✦</span></span>
+    <span class="ticker-item">REST APIs <span>✦</span></span>
+    <span class="ticker-item">Git <span>✦</span></span>
+  </div>
+</div>
+
+<section>
+  <div class="section-label">O que faço</div>
+  <h2>Skills & especialidades</h2>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">🌐</div>
+      <div class="skill-name">Frontend</div>
+      <div class="skill-desc">React, HTML/CSS, interfaces responsivas e acessíveis</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">⚙️</div>
+      <div class="skill-name">Backend</div>
+      <div class="skill-desc">Node.js, REST APIs, autenticação e bases de dados</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📱</div>
+      <div class="skill-name">Mobile</div>
+      <div class="skill-desc">Flutter e React Native para iOS e Android</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🗄️</div>
+      <div class="skill-name">Base de dados</div>
+      <div class="skill-desc">PostgreSQL, MongoDB, modelação e otimização</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Portfolio</div>
+  <h2>Projetos em destaque</h2>
+  <div class="projects-grid">
+    <div class="project-card featured">
+      <div class="project-visual web" style="height:180px; font-size:4rem;">🛒</div>
+      <div>
+        <div class="project-tags">
+          <span class="tag">React</span>
+          <span class="tag">Node.js</span>
+          <span class="tag">PostgreSQL</span>
+        </div>
+        <div class="project-title">Plataforma E-commerce</div>
+        <p class="project-desc">Loja online completa com carrinho, pagamentos e painel de gestão para o vendedor. Desenvolvida do zero com foco em performance e UX.</p>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="project-visual mobile">📲</div>
+      <div class="project-tags">
+        <span class="tag">Flutter</span>
+        <span class="tag">Firebase</span>
+      </div>
+      <div class="project-title">App de Hábitos</div>
+      <p class="project-desc">Aplicação mobile para tracking de hábitos com notificações e estatísticas.</p>
+    </div>
+    <div class="project-card">
+      <div class="project-visual api">🔌</div>
+      <div class="project-tags">
+        <span class="tag">Node.js</span>
+        <span class="tag">REST API</span>
+      </div>
+      <div class="project-title">API de Gestão</div>
+      <p class="project-desc">API RESTful com autenticação JWT para sistema de gestão de clientes.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Sobre mim</div>
+  <h2>Quem sou</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>Sou <strong>Filipe Braz</strong>, a finalizar a licenciatura em Informática e apaixonado por criar produtos digitais de raiz — desde a interface até ao servidor.</p>
+      <p>Tenho experiência tanto em <strong>web fullstack</strong> como em <strong>desenvolvimento mobile</strong>, o que me permite entregar soluções completas sem depender de terceiros.</p>
+      <p>Procuro projetos freelance onde possa <strong>criar valor real</strong> para negócios e pessoas reais.</p>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">3+</div>
+        <div class="stat-label">anos de experiência</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">10+</div>
+        <div class="stat-label">projetos concluídos</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2</div>
+        <div class="stat-label">plataformas mobile</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">queijo consumido</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="contact-box">
+    <div class="section-label" style="text-align:center">Vamos trabalhar juntos</div>
+    <h2>Tens um projeto em mente?</h2>
+    <p>Estou disponível para projetos freelance — web, mobile ou fullstack. Fala comigo sem compromisso.</p>
+    <div class="contact-links">
+      <a class="contact-link" href="mailto:filipebraz@rfcb.pt">✉ filipebraz@rfcb.pt</a>
+      <a class="contact-link" href="#">💼 LinkedIn</a>
+      <a class="contact-link" href="#">🐙 GitHub</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 Filipe Braz</span>
+  <span>Feito com código & queijo ☕</span>
+</footer>
+
+</body>
+</html>
