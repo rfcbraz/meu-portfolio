@@ -685,13 +685,14 @@
   <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
     <button class="modal-close" aria-label="Fechar">×</button>
     <h2 id="contact-modal-title" data-i18n="modalTitle">Contactar</h2>
-    <!-- FORM DESTINATION AND ADJUSTMENTS -->
+    <!-- SUBMISSION NATÍVA DO HTML SEM USAR FETCH -->
     <form id="contact-form" action="https://formsubmit.cloud/f/f17d87f5-6441-4acb-a145-e08e96c34385/" method="POST" autocomplete="off">
       <input name="name" placeholder="Nome completo" data-i18n-placeholder="placeholderName" required>
       <input name="email" placeholder="Email ou telemóvel" data-i18n-placeholder="placeholderContact" required>
       <input name="subject" placeholder="Assunto" data-i18n-placeholder="placeholderSubject" required>
       <textarea name="message" placeholder="Mensagem" data-i18n-placeholder="placeholderMessage" required></textarea>
       
+      <!-- Redirecionamento configurado para voltar à página inicial -->
       <input type="hidden" name="_next" value="https://rfcb.pt">
       
       <div style="display:flex; gap:0.5rem; justify-content:flex-end; margin-top:0.5rem;">
@@ -751,8 +752,7 @@
 
     if(form){
       form.addEventListener('submit', function(e){
-        // Removemos o e.preventDefault() para deixar o HTML enviar nativamente
-        
+        // Não prevenimos o envio padrão, o browser vai submeter nativamente!
         var submitBtn = form.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
         submitBtn.innerText = 'A enviar...';
