@@ -538,7 +538,7 @@
     <span class="line2">Braz.</span>
   </h1>
   <p class="hero-sub" data-i18n="heroSubtitle">
-     A finalizar a licenciatura em Informática, specialized em <strong style="color:var(--text)">desenvolvimento web, fullstack</strong> e <strong style="color:var(--text)">aplicações mobile</strong>. Transformo ideias em produtos digitais que funcionam.
+     A finalizar a licenciatura em Informática, especializado em <strong style="color:var(--text)">desenvolvimento web, fullstack</strong> e <strong style="color:var(--text)">aplicações mobile</strong>. Transformo ideias em produtos digitais que funcionam.
   </p>
   <div class="hero-actions">
     <a class="btn-primary" href="#projects" data-i18n="heroProjects">Ver projetos</a>
@@ -688,8 +688,9 @@
     <form id="contact-form" action="https://formsubmit.cloud/f/f17d87f5-6441-4acb-a145-e08e96c34385" method="POST" autocomplete="off">
       <input type="text" name="_gotcha" style="display:none">
       
-      <input type="text" name="name" placeholder="Nome completo" data-i18n-placeholder="placeholderName" required>
+      <input name="name" placeholder="Nome completo" data-i18n-placeholder="placeholderName" required>
       <input type="email" name="email" placeholder="Email ou telemóvel" data-i18n-placeholder="placeholderContact" required>
+      <input name="subject" placeholder="Assunto" data-i18n-placeholder="placeholderSubject" required>
       <textarea name="message" placeholder="Mensagem" data-i18n-placeholder="placeholderMessage" required></textarea>
       
       <div style="display:flex; gap:0.5rem; justify-content:flex-end; margin-top:0.5rem;">
@@ -747,9 +748,9 @@
 
     document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
 
-if(form){
+    if(form){
       form.addEventListener('submit', function(e){
-        // Deixamos o browser submeter nativamente para a cloud sem e.preventDefault()
+        // Deixamos o browser fazer o POST nativo para o endpoint da cloud
         var submitBtn = form.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
         submitBtn.innerText = 'A enviar...';
