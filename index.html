@@ -685,15 +685,12 @@
     <button class="modal-close" aria-label="Fechar">×</button>
     <h2 id="contact-modal-title" data-i18n="modalTitle">Contactar</h2>
     
-    <form id="contact-form" action="https://formsubmit.co/filipebraz@rfcb.pt" method="POST" autocomplete="off">
-      <input name="name" placeholder="Nome completo" data-i18n-placeholder="placeholderName" required>
-      <input name="email" placeholder="Email ou telemóvel" data-i18n-placeholder="placeholderContact" required>
-      <input name="subject" placeholder="Assunto" data-i18n-placeholder="placeholderSubject" required>
-      <textarea name="message" placeholder="Mensagem" data-i18n-placeholder="placeholderMessage" required></textarea>
+    <form id="contact-form" action="https://formsubmit.cloud/f/f17d87f5-6441-4acb-a145-e08e96c34385" method="POST" autocomplete="off">
+      <input type="text" name="_gotcha" style="display:none">
       
-      <input type="hidden" name="_next" value="https://rfcb.pt">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_template" value="table">
+      <input type="text" name="name" placeholder="Nome completo" data-i18n-placeholder="placeholderName" required>
+      <input type="email" name="email" placeholder="Email ou telemóvel" data-i18n-placeholder="placeholderContact" required>
+      <textarea name="message" placeholder="Mensagem" data-i18n-placeholder="placeholderMessage" required></textarea>
       
       <div style="display:flex; gap:0.5rem; justify-content:flex-end; margin-top:0.5rem;">
         <button type="submit" class="btn-primary" data-i18n="modalSend">Enviar</button>
@@ -750,9 +747,9 @@
 
     document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
 
-    if(form){
+if(form){
       form.addEventListener('submit', function(e){
-        // IMPORTANTE: Deixamos o browser submeter por si próprio!
+        // Deixamos o browser submeter nativamente para a cloud sem e.preventDefault()
         var submitBtn = form.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
         submitBtn.innerText = 'A enviar...';
