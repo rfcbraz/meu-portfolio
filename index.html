@@ -95,7 +95,7 @@
       border: 1px solid rgba(255,255,255,0.12);
       color: var(--text);
       font-family: 'DM Sans', sans-serif;
-      font-size: 0.8rem;
+      font-size: 0.8 r em;
       padding: 0.45rem 0.65rem;
       border-radius: 999px;
       cursor: pointer;
@@ -679,7 +679,6 @@
   <span data-i18n="footerMadeWith">Feito com código & queijo 🧀</span>
 </footer>
 
-<!-- Contact modal -->
 <div id="contact-modal" class="modal" aria-hidden="true">
   <div class="modal-backdrop" data-close></div>
   <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
@@ -770,10 +769,10 @@
         submitBtn.disabled = true;
         submitBtn.innerText = 'A enviar...';
 
-        // Endpoint seguro e gratuito do FormSubmit
-        var url = 'https://formsubmit.co/ajax/filipebraz@rfcb.pt';
+        // Novo Endpoint do FormSubmit Cloud gerado no seu painel
+        var url = 'https://formsubmit.cloud/f/f17d87f5-6441-4acb-a145-e08e96c34385/';
 
-        // Enviar dados de forma assíncrona com Fetch API
+        // Enviar dados utilizando a estrutura do .cloud de forma segura
         fetch(url, {
           method: 'POST',
           headers: { 
@@ -781,13 +780,10 @@
             'Accept': 'application/json'
           },
           body: JSON.stringify({
-            Nome: nameVal,
-            Contacto: contactVal,
-            Assunto: subjectVal,
-            Mensagem: messageVal,
-            '_subject': 'Novo Contacto do Portfólio: ' + subjectVal,
-            '_captcha': 'false',
-            '_template': 'table'
+            name: nameVal,
+            email: contactVal,    // Mapeia o seu campo genérico de contacto para o email esperado
+            subject: subjectVal,
+            message: messageVal
           })
         })
         .then(function(response) {
@@ -921,7 +917,6 @@
     }
   };
 
-  // Simple internationalization script placeholder to map inputs if needed
   window.translateText = function(key) {
     var lang = document.querySelector('.lang-btn.active')?.getAttribute('data-lang') || 'pt';
     return translations[lang]?.[key] || translations['pt']?.[key] || key;
