@@ -95,7 +95,7 @@
       border: 1px solid rgba(255,255,255,0.12);
       color: var(--text);
       font-family: 'DM Sans', sans-serif;
-      font-size: 0.8 r em;
+      font-size: 0.8rem;
       padding: 0.45rem 0.65rem;
       border-radius: 999px;
       cursor: pointer;
@@ -679,16 +679,22 @@
   <span data-i18n="footerMadeWith">Feito com código & queijo 🧀</span>
 </footer>
 
+<!-- Contact modal -->
 <div id="contact-modal" class="modal" aria-hidden="true">
   <div class="modal-backdrop" data-close></div>
   <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
     <button class="modal-close" aria-label="Fechar">×</button>
     <h2 id="contact-modal-title" data-i18n="modalTitle">Contactar</h2>
-    <form id="contact-form" method="POST" autocomplete="off">
+    <!-- FORM DESTINATION AND ADJUSTMENTS -->
+    <form id="contact-form" action="https://formsubmit.cloud/f/f17d87f5-6441-4acb-a145-e08e96c34385/" method="POST" autocomplete="off">
       <input name="name" placeholder="Nome completo" data-i18n-placeholder="placeholderName" required>
-      <input name="contact" placeholder="Email ou telemóvel" data-i18n-placeholder="placeholderContact" required>
+      <input name="email" placeholder="Email ou telemóvel" data-i18n-placeholder="placeholderContact" required>
       <input name="subject" placeholder="Assunto" data-i18n-placeholder="placeholderSubject" required>
       <textarea name="message" placeholder="Mensagem" data-i18n-placeholder="placeholderMessage" required></textarea>
+      
+      <!-- Crucial parameter for FormSubmit to return cleanly in background -->
+      <input type="hidden" name="_json" value="true">
+      
       <div style="display:flex; gap:0.5rem; justify-content:flex-end; margin-top:0.5rem;">
         <button type="submit" class="btn-primary" data-i18n="modalSend">Enviar</button>
         <button type="button" class="btn-ghost modal-close" data-i18n="modalClose">Fechar</button>
@@ -745,46 +751,21 @@
     document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
 
     if(form){
-      var nameInput = form.querySelector('input[name="name"]');
-      var contactInput = form.querySelector('input[name="contact"]');
-      var subjectInput = form.querySelector('input[name="subject"]');
-      var messageInput = form.querySelector('textarea[name="message"]');
-
       form.addEventListener('submit', function(e){
         e.preventDefault();
 
-        var nameVal = nameInput.value.trim();
-        var contactVal = contactInput.value.trim();
-        var subjectVal = subjectInput.value.trim();
-        var messageVal = messageInput.value.trim();
-
-        if (!nameVal || !contactVal || !subjectVal || !messageVal) {
-          alert(window.translateText ? window.translateText('formFillAll') : 'Por favor preencha todos os campos antes de enviar.');
-          return;
-        }
-
-        // Selecionar o botão de submissão e guardar estado original
         var submitBtn = form.querySelector('button[type="submit"]');
         var originalBtnText = submitBtn.innerText;
         submitBtn.disabled = true;
         submitBtn.innerText = 'A enviar...';
 
-        // Novo Endpoint do FormSubmit Cloud gerado no seu painel
-        var url = 'https://formsubmit.cloud/f/f17d87f5-6441-4acb-a145-e08e96c34385/';
-
-        // Enviar dados utilizando a estrutura do .cloud de forma segura
-        fetch(url, {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
+        // Native FormData method shielded against ad-blockers and tracking protections
+        fetch(form.action, {
+          method: form.method,
+          body: new FormData(form),
+          headers: {
             'Accept': 'application/json'
-          },
-          body: JSON.stringify({
-            name: nameVal,
-            email: contactVal,    // Mapeia o seu campo genérico de contacto para o email esperado
-            subject: subjectVal,
-            message: messageVal
-          })
+          }
         })
         .then(function(response) {
           if (response.ok) {
@@ -796,8 +777,8 @@
           }
         })
         .catch(function(error) {
-          console.error('Erro na submissão:', error);
-          alert('Erro de conexão com o servidor de e-mail.');
+          console.error('Erro detetado:', error);
+          alert('Erro de envio. Se persistir, desative temporariamente o Ad-Blocker/Proteções do Opera GX para este site.');
         })
         .finally(function() {
           submitBtn.disabled = false;
