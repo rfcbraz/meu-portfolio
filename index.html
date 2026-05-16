@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Filipe Braz — Portfólio Web</title>
 <meta name="description" content="Portfólio de Filipe Braz, desenvolvedor web, fullstack e aplicações mobile.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='8' fill='%2322c55e'/></svg>" type="image/svg+xml">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -50,7 +51,8 @@
     font-weight: 800;
     font-size: 1.2rem;
     letter-spacing: -0.02em;
-    color: var(--text);
+    color: var(--accent2);
+    text-decoration: none;
   }
   .logo span { color: var(--accent); }
 
@@ -131,14 +133,22 @@
     margin-bottom: 2rem;
   }
   .dot {
-    width: 6px; height: 6px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    background: #4ade80;
-    animation: pulse 2s infinite;
+    background: #22c55e;
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+    animation: blink 1.5s infinite;
   }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
+  @keyframes blink {
+    0%, 100% {
+      opacity: 1;
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+    }
+    50% {
+      opacity: 0.3;
+      box-shadow: 0 0 8px 2px rgba(34, 197, 94, 0.4);
+    }
   }
 
   h1 {
@@ -1024,6 +1034,23 @@
 
   translatePage('pt');
 })();
+</script>
+
+<script>
+  // Animate favicon with blinking green dot
+  (function() {
+    var isVisible = true;
+    var favicon = document.querySelector('link[rel="icon"]');
+    
+    function updateFavicon() {
+      var opacity = isVisible ? 1 : 0.3;
+      var svg = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='8' fill='%2322c55e' opacity='" + opacity + "'/></svg>";
+      favicon.href = 'data:image/svg+xml,' + svg;
+      isVisible = !isVisible;
+    }
+    
+    setInterval(updateFavicon, 750);
+  })();
 </script>
 
 </body>
