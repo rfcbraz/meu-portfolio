@@ -321,6 +321,15 @@
 .project-card {
   position: relative; /* Obrigatório para o truque funcionar */
   cursor: pointer;
+}   .stretched-link::after {
+     position: absolute;
+     top: 0;
+     right: 0;
+     bottom: 0;
+     left: 0;
+     z-index: 1;
+      content: "";
+      background-color: rgba(0, 0, 0, 0);
 }
     .project-card {
       background: var(--surface);
@@ -614,42 +623,55 @@
 <section id="projects">
   <div class="section-label" data-i18n="projectsLabel">Portfolio</div>
   <h2 data-i18n="projectsTitle">Projetos em destaque</h2>
+  
   <div class="projects-grid">
-    <div class="project-card featured" style="position: relative;"> <!-- Garante que tem position: relative -->
-  <div class="project-visual web" style="height:180px; font-size:4rem;">🛎️</div>
-  <div>
-    <div class="project-tags">
-      <span class="tag">React</span>
-      <span class="tag">Node.js</span>
-      <span class="tag">PostgreSQL</span>
-    </div>
     
-    <!-- O truque está aqui: um link invisível que se estende por todo o cartão -->
-    <a href="https://taupe-chebakia-f35b29.netlify.app/#" target="_blank" rel="noopener noreferrer" class="stretched-link"></a>
+    <!-- PROJETO 1: Alojamento Local -->
+    <div class="project-card featured" style="position: relative;">
+      <div class="project-visual web" style="height:180px; font-size:4rem;">🛎️</div>
+      <div class="project-tags">
+        <span class="tag">React</span>
+        <span class="tag">Node.js</span>
+        <span class="tag">PostgreSQL</span>
+      </div>
+      
+      <!-- Link invisível que cobre o cartão inteiro -->
+      <a href="https://taupe-chebakia-f35b29.netlify.app/#" target="_blank" rel="noopener noreferrer" class="stretched-link"></a>
 
-    <div class="project-title" data-i18n="projectEcommerceTitle">Plataforma de reservas Alojamento Local</div>
-    <p class="project-desc" data-i18n="projectEcommerceDesc">Website de consulta e reserva de quartos, pagamentos e painel de gestão para o vendedor. Desenvolvida do zero com foco em performance e UX.</p>
-  </div>
-</div>
+      <div class="project-title" data-i18n="projectEcommerceTitle">Plataforma de reservas Alojamento Local</div>
+      <p class="project-desc" data-i18n="projectEcommerceDesc">Website de consulta e reserva de quartos, pagamentos e painel de gestão para o vendedor. Desenvolvida do zero com foco em performance e UX.</p>
     </div>
-    <div class="project-card">
+
+    <!-- PROJETO 2: App de Hábitos -->
+    <div class="project-card" style="position: relative;">
       <div class="project-visual mobile">📲</div>
       <div class="project-tags">
         <span class="tag">Flutter</span>
         <span class="tag">Firebase</span>
       </div>
+      
+      <!-- Link invisível (substitui o # pelo link real do projeto quando quiseres) -->
+      <a href="#" target="_blank" rel="noopener noreferrer" class="stretched-link"></a>
+
       <div class="project-title" data-i18n="projectHabitsTitle">App de Hábitos</div>
       <p class="project-desc" data-i18n="projectHabitsDesc">Aplicação mobile para tracking de hábitos com notificações e estatísticas.</p>
     </div>
-    <div class="project-card">
+
+    <!-- PROJETO 3: API de Gestão -->
+    <div class="project-card" style="position: relative;">
       <div class="project-visual api">🔌</div>
       <div class="project-tags">
         <span class="tag">Node.js</span>
         <span class="tag">REST API</span>
       </div>
+      
+      <!-- Link invisível (substitui o # pelo link real do projeto quando quiseres) -->
+      <a href="#" target="_blank" rel="noopener noreferrer" class="stretched-link"></a>
+
       <div class="project-title" data-i18n="projectApiTitle">API de Gestão</div>
       <p class="project-desc" data-i18n="projectApiDesc">API RESTful com autenticação JWT para sistema de gestão de clientes.</p>
     </div>
+
   </div>
 </section>
 
