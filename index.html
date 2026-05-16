@@ -312,6 +312,7 @@
       padding: 1.5rem;
       transition: border-color 0.2s, transform 0.2s;
       cursor: pointer;
+      position: relative; /* Crucial para o stretched-link funcionar nos cartões */
     }
     .project-card:hover {
       border-color: rgba(124,92,252,0.4);
@@ -323,6 +324,18 @@
       grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
       align-items: center;
+    }
+
+    /* Classe do link invisível que cobre o cartão sem partir o layout */
+    .stretched-link::after {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      content: "";
+      background-color: rgba(0, 0, 0, 0);
     }
 
     .project-visual {
@@ -606,6 +619,7 @@
           <span class="tag">Node.js</span>
           <span class="tag">PostgreSQL</span>
         </div>
+        <a href="https://taupe-chebakia-f35b29.netlify.app" target="_blank" rel="noopener noreferrer" class="stretched-link"></a>
         <div class="project-title" data-i18n="projectEcommerceTitle">Plataforma de reservas Alojamento Local</div>
         <p class="project-desc" data-i18n="projectEcommerceDesc">Website de consulta e reserva de quartos, pagamentos e painel de gestão para o vendedor. Desenvolvida do zero com foco em performance e UX.</p>
       </div>
@@ -890,8 +904,6 @@
       modalClose: 'Close',
       formFillAll: 'Please fill in all fields before sending.'
     },
-
-
     de: {
       navSkills: 'Skills',
       navProjects: 'Projekte',
@@ -913,7 +925,7 @@
       skillDatabaseDesc: 'PostgreSQL, MongoDB, Modellierung und Optimierung',
       projectsLabel: 'Portfolio',
       projectsTitle: 'Ausgewählte Projekte',
-     projectEcommerceTitle: 'Buchungsplattform für Ferienunterkünfte',
+      projectEcommerceTitle: 'Buchungsplattform für Ferienunterkünfte',
       projectEcommerceDesc: 'Website für die Zimmer- und Buchungsverwaltung, Zahlungen und ein Dashboard für den Vermieter. Von Grund auf neu entwickelt, mit Fokus auf Performance und UX.',
       projectHabitsTitle: 'Gewohnheits-App',
       projectHabitsDesc: 'Mobile App zur Gewohnheitsverfolgung mit Benachrichtigungen und Statistiken.',
@@ -935,7 +947,7 @@
       contactGitHub: '🐙 GitHub',
       footerCopyright: '© 2026 Filipe Braz - rfcb solutions',
       footerMadeWith: 'Mit Code & Käse gemacht 🧀',
-      modalTitle: 'Kontakt',
+      modalTitle: 'Contact',
       placeholderName: 'Vollständiger Name',
       placeholderContact: 'E-Mail oder Telefon',
       placeholderSubject: 'Betreff',
@@ -958,15 +970,15 @@
       skillFrontend: 'Frontend',
       skillFrontendDesc: 'React, HTML/CSS, interfaces responsivas y accesibles',
       skillBackend: 'Backend',
-      skillBackendDesc: 'Node.js, REST APIs, autenticación y bases de datos',
+      skillBackendDesc: 'Node.js, REST APIs, autenticación y bases de dados',
       skillMobile: 'Mobile',
       skillMobileDesc: 'Flutter y React Native para iOS y Android',
       skillDatabase: 'Base de datos',
       skillDatabaseDesc: 'PostgreSQL, MongoDB, modelado y optimización',
       projectsLabel: 'Portfolio',
       projectsTitle: 'Proyectos destacados',
-      projectEcommerceTitle: 'Plataforma E-commerce',
-      projectEcommerceDesc: 'Tienda online completa con carrito, pagos y panel de gestión. Desarrollada desde cero con foco en rendimiento y UX.',
+      projectEcommerceTitle: 'Plataforma de reservas de Alojamiento Local',
+      projectEcommerceDesc: 'Sitio web para consulta y reserva de habitaciones, pagos y panel de gestión para el vendedor. Desarrollado desde cero con un enfoque en el rendimiento y la experiencia de usuario (UX).',
       projectHabitsTitle: 'App de Hábitos',
       projectHabitsDesc: 'Aplicación móvil para seguimiento de hábitos con notificaciones y estadísticas.',
       projectApiTitle: 'API de Gestión',
