@@ -685,12 +685,14 @@
     <button class="modal-close" aria-label="Fechar">×</button>
     <h2 id="contact-modal-title" data-i18n="modalTitle">Contactar</h2>
     
-    <form id="contact-form" action="https://formsubmit.cloud/f/f17d87f5-6441-4acb-a145-e08e96c34385" method="POST" autocomplete="off">
+    <form id="contact-form" autocomplete="off">
+      <input type="hidden" name="access_key" value="248e71dc-0ba1-4ef5-9f31-704a2841c40b">
+      <input type="hidden" name="subject" value="Novo contacto — Portfólio Filipe Braz">
       <input type="text" name="_gotcha" style="display:none">
       
-      <input type="text" name="name" placeholder="Nome completo" data-i18n-placeholder="placeholderName" required>
+      <input name="name" placeholder="Nome completo" data-i18n-placeholder="placeholderName" required>
       <input type="email" name="email" placeholder="Email ou telemóvel" data-i18n-placeholder="placeholderContact" required>
-      <input type="text" name="subject" placeholder="Assunto" data-i18n-placeholder="placeholderSubject" required>
+      <input name="subject" placeholder="Assunto" data-i18n-placeholder="placeholderSubject" required>
       <textarea name="message" placeholder="Mensagem" data-i18n-placeholder="placeholderMessage" required></textarea>
       
       <div style="display:flex; gap:0.5rem; justify-content:flex-end; margin-top:0.5rem;">
@@ -749,11 +751,33 @@
     document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
 
     if(form){
-      form.addEventListener('submit', function(e){
-        // Deixamos o browser submeter nativamente para a cloud sem e.preventDefault()
+      form.addEventListener('submit', async function(e){
+        e.preventDefault();
         var submitBtn = form.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
         submitBtn.innerText = 'A enviar...';
+
+        try {
+          const data = Object.fromEntries(new FormData(form));
+          const res = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(data)
+          });
+          const json = await res.json();
+
+          if(json.success){
+            submitBtn.innerText = '✓ Enviado!';
+            form.reset();
+            setTimeout(closeModal, 1500);
+          } else {
+            throw new Error(json.message || 'Erro desconhecido');
+          }
+        } catch(err) {
+          submitBtn.disabled = false;
+          submitBtn.innerText = 'Enviar';
+          alert('Erro ao enviar. Tenta novamente.');
+        }
       });
     }
   })();
