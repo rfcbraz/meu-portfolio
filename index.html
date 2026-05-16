@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
+  <meta name="google-site-verification" content="aeueU3hCNbYLgqUXGCjDrGv8ix1Fo4vOA2StyUZlclM" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Filipe Braz — Portfólio Web</title>
-<meta name="description" content="Portfólio de Filipe Braz, desenvolvedor web fullstack e aplicações mobile.">
+<meta name="description" content="Portfólio de Filipe Braz, desenvolvedor web, fullstack e aplicações mobile.">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
   :root {
     --bg: #0a0a0f;
@@ -79,6 +81,34 @@
     transition: opacity 0.2s;
   }
   .nav-cta:hover { opacity: 0.85; }
+
+  .lang-switcher {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-right: 1rem;
+  }
+  .lang-switcher button {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    padding: 0.45rem 0.65rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .lang-switcher button:hover,
+  .lang-switcher button.active {
+    background: var(--accent);
+    border-color: rgba(124,92,252,0.6);
+    color: #fff;
+  }
+  .lang-switcher button:focus {
+    outline: 2px solid rgba(255,255,255,0.4);
+    outline-offset: 2px;
+  }
 
   /* HERO */
   .hero {
@@ -477,28 +507,31 @@
     <span class="hamburger"></span>
   </button>
   <ul class="nav-links" role="menu">
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#projects">Projetos</a></li>
-    <li><a href="#about">Sobre</a></li>
+    <li><a href="#skills" data-i18n="navSkills">Skills</a></li>
+    <li><a href="#projects" data-i18n="navProjects">Projetos</a></li>
+    <li><a href="#about" data-i18n="navAbout">Sobre</a></li>
   </ul>
-  <button class="nav-cta" id="contact-btn">Contactar</button>
+  <div class="lang-switcher" role="group" aria-label="Mudar idioma">
+    <button type="button" class="lang-btn active" data-lang="pt">PT</button>
+    <button type="button" class="lang-btn" data-lang="en">EN</button>
+    <button type="button" class="lang-btn" data-lang="de">DE</button>
+    <button type="button" class="lang-btn" data-lang="es">ES</button>
+  </div>
+  <button class="nav-cta" id="contact-btn" data-i18n="contactButton">Contactar</button>
 </nav>
 
 <div class="hero">
-  <div class="hero-badge">
-    <div class="dot"></div>
-    Disponível para projetos freelance
-  </div>
+  <div class="hero-badge"><span class="dot" aria-hidden="true"></span><span data-i18n="heroBadge">Disponível para projetos freelance</span></div>
   <h1>
     Filipe<br>
     <span class="line2">Braz.</span>
   </h1>
-  <p class="hero-sub">
-     A finalizar a licenciatura em Informática, especializado em <strong style="color:var(--text)">desenvolvimento web fullstack</strong> e <strong style="color:var(--text)">aplicações mobile</strong>. Transformo ideias em produtos digitais que funcionam.
+  <p class="hero-sub" data-i18n="heroSubtitle">
+     A finalizar a licenciatura em Informática, especializado em <strong style="color:var(--text)">desenvolvimento web, fullstack</strong> e <strong style="color:var(--text)">aplicações mobile</strong>. Transformo ideias em produtos digitais que funcionam.
   </p>
   <div class="hero-actions">
-    <a class="btn-primary" href="#projects">Ver projetos</a>
-    <button class="btn-ghost">Download CV</button>
+    <a class="btn-primary" href="#projects" data-i18n="heroProjects">Ver projetos</a>
+    <button class="btn-ghost" data-i18n="heroDownloadCV">Download CV</button>
   </div>
 </div>
 
@@ -524,35 +557,35 @@
 </div>
 
 <section id="skills">
-  <div class="section-label">O que faço</div>
-  <h2>Skills & especialidades</h2>
+  <div class="section-label" data-i18n="skillsLabel">O que faço</div>
+  <h2 data-i18n="skillsTitle">Skills & especialidades</h2>
   <div class="skills-grid">
     <div class="skill-card">
       <div class="skill-icon">🌐</div>
-      <div class="skill-name">Frontend</div>
-      <div class="skill-desc">React, HTML/CSS, interfaces responsivas e acessíveis</div>
+      <div class="skill-name" data-i18n="skillFrontend">Frontend</div>
+      <div class="skill-desc" data-i18n="skillFrontendDesc">React, HTML/CSS, interfaces responsivas e acessíveis</div>
     </div>
     <div class="skill-card">
       <div class="skill-icon">⚙️</div>
-      <div class="skill-name">Backend</div>
-      <div class="skill-desc">Node.js, REST APIs, autenticação e bases de dados</div>
+      <div class="skill-name" data-i18n="skillBackend">Backend</div>
+      <div class="skill-desc" data-i18n="skillBackendDesc">Node.js, REST APIs, autenticação e bases de dados</div>
     </div>
     <div class="skill-card">
       <div class="skill-icon">📱</div>
-      <div class="skill-name">Mobile</div>
-      <div class="skill-desc">Flutter e React Native para iOS e Android</div>
+      <div class="skill-name" data-i18n="skillMobile">Mobile</div>
+      <div class="skill-desc" data-i18n="skillMobileDesc">Flutter e React Native para iOS e Android</div>
     </div>
     <div class="skill-card">
       <div class="skill-icon">🗄️</div>
-      <div class="skill-name">Base de dados</div>
-      <div class="skill-desc">PostgreSQL, MongoDB, modelação e otimização</div>
+      <div class="skill-name" data-i18n="skillDatabase">Base de dados</div>
+      <div class="skill-desc" data-i18n="skillDatabaseDesc">PostgreSQL, MongoDB, modelação e otimização</div>
     </div>
   </div>
 </section>
 
 <section id="projects">
-  <div class="section-label">Portfolio</div>
-  <h2>Projetos em destaque</h2>
+  <div class="section-label" data-i18n="projectsLabel">Portfolio</div>
+  <h2 data-i18n="projectsTitle">Projetos em destaque</h2>
   <div class="projects-grid">
     <div class="project-card featured">
       <div class="project-visual web" style="height:180px; font-size:4rem;">🛒</div>
@@ -562,8 +595,8 @@
           <span class="tag">Node.js</span>
           <span class="tag">PostgreSQL</span>
         </div>
-        <div class="project-title">Plataforma E-commerce</div>
-        <p class="project-desc">Loja online completa com carrinho, pagamentos e painel de gestão para o vendedor. Desenvolvida do zero com foco em performance e UX.</p>
+        <div class="project-title" data-i18n="projectEcommerceTitle">Plataforma E-commerce</div>
+        <p class="project-desc" data-i18n="projectEcommerceDesc">Loja online completa com carrinho, pagamentos e painel de gestão para o vendedor. Desenvolvida do zero com foco em performance e UX.</p>
       </div>
     </div>
     <div class="project-card">
@@ -572,8 +605,8 @@
         <span class="tag">Flutter</span>
         <span class="tag">Firebase</span>
       </div>
-      <div class="project-title">App de Hábitos</div>
-      <p class="project-desc">Aplicação mobile para tracking de hábitos com notificações e estatísticas.</p>
+      <div class="project-title" data-i18n="projectHabitsTitle">App de Hábitos</div>
+      <p class="project-desc" data-i18n="projectHabitsDesc">Aplicação mobile para tracking de hábitos com notificações e estatísticas.</p>
     </div>
     <div class="project-card">
       <div class="project-visual api">🔌</div>
@@ -581,37 +614,37 @@
         <span class="tag">Node.js</span>
         <span class="tag">REST API</span>
       </div>
-      <div class="project-title">API de Gestão</div>
-      <p class="project-desc">API RESTful com autenticação JWT para sistema de gestão de clientes.</p>
+      <div class="project-title" data-i18n="projectApiTitle">API de Gestão</div>
+      <p class="project-desc" data-i18n="projectApiDesc">API RESTful com autenticação JWT para sistema de gestão de clientes.</p>
     </div>
   </div>
 </section>
 
 <section id="about">
-  <div class="section-label">Sobre mim</div>
-  <h2>Quem sou</h2>
+  <div class="section-label" data-i18n="aboutLabel">Sobre mim</div>
+  <h2 data-i18n="aboutTitle">Quem sou</h2>
   <div class="about-grid">
     <div class="about-text">
-      <p>Sou <strong>Filipe Braz</strong>, a finalizar a licenciatura em Informática e apaixonado por criar produtos digitais de raiz — desde a interface até ao servidor.</p>
-      <p>Tenho experiência tanto em <strong>web fullstack</strong> como em <strong>desenvolvimento mobile</strong>, o que me permite entregar soluções completas sem depender de terceiros.</p>
-      <p>Procuro projetos freelance onde possa <strong>criar valor real</strong> para negócios e pessoas reais.</p>
+      <p data-i18n="aboutPara1">Sou <strong>Filipe Braz</strong>, a finalizar a licenciatura em Informática e apaixonado por criar produtos digitais de raiz — desde a interface até ao servidor.</p>
+      <p data-i18n="aboutPara2">Tenho experiência tanto em <strong>web, fullstack</strong> como em <strong>desenvolvimento mobile</strong>, o que me permite entregar soluções completas sem depender de terceiros.</p>
+      <p data-i18n="aboutPara3">Procuro projetos freelance onde possa <strong>criar valor real</strong> para negócios e pessoas reais.</p>
     </div>
     <div class="stats-grid">
       <div class="stat-card">
-        <div class="stat-num">3+</div>
-        <div class="stat-label">anos de experiência</div>
+        <div class="stat-num">5+</div>
+        <div class="stat-label" data-i18n="statExperience">anos de experiência</div>
       </div>
       <div class="stat-card">
         <div class="stat-num">10+</div>
-        <div class="stat-label">projetos concluídos</div>
+        <div class="stat-label" data-i18n="statProjects">projetos concluídos</div>
       </div>
       <div class="stat-card">
         <div class="stat-num">2</div>
-        <div class="stat-label">plataformas mobile</div>
+        <div class="stat-label" data-i18n="statPlatforms">plataformas mobile</div>
       </div>
       <div class="stat-card">
         <div class="stat-num">∞</div>
-        <div class="stat-label">queijo consumido</div>
+        <div class="stat-label" data-i18n="statCheese">queijo consumido</div>
       </div>
     </div>
   </div>
@@ -619,13 +652,13 @@
 
 <section id="contact">
   <div class="contact-box">
-    <div class="section-label" style="text-align:center">Vamos trabalhar juntos</div>
-    <h2>Tens um projeto em mente?</h2>
-    <p>Estou disponível para projetos freelance — web, mobile ou fullstack. Fala comigo sem compromisso.</p>
+    <div class="section-label" style="text-align:center" data-i18n="contactLabel">Vamos trabalhar juntos</div>
+    <h2 data-i18n="contactTitle">Tens um projeto em mente?</h2>
+    <p data-i18n="contactText">Estou disponível para projetos freelance — web, mobile ou fullstack. Fala comigo sem compromisso.</p>
     <div class="contact-links">
       <a class="contact-link email-trigger" href="#">✉ filipebraz@rfcb.pt</a>
-      <a class="contact-link" href="#">💼 LinkedIn</a>
-      <a class="contact-link" href="#">🐙 GitHub</a>
+      <a class="contact-link" href="#" data-i18n="contactLinkedIn">💼 LinkedIn</a>
+      <a class="contact-link" href="#" data-i18n="contactGitHub">🐙 GitHub</a>
     </div>
   </div>
 </section>
@@ -633,8 +666,8 @@
 
 
 <footer>
-  <span>© 2025 Filipe Braz</span>
-  <span>Feito com código & queijo ☕</span>
+  <span data-i18n="footerCopyright">© 2026 Filipe Braz - rfcb solutions</span>
+  <span data-i18n="footerMadeWith">Feito com código & queijo 🧀</span>
 </footer>
 
 <!-- Contact modal -->
@@ -642,15 +675,15 @@
   <div class="modal-backdrop" data-close></div>
   <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
     <button class="modal-close" aria-label="Fechar">×</button>
-    <h2 id="contact-modal-title">Contactar</h2>
+    <h2 id="contact-modal-title" data-i18n="modalTitle">Contactar</h2>
     <form id="contact-form" autocomplete="off">
-      <input name="name" placeholder="Nome completo" required>
-      <input name="contact" placeholder="Email ou telemóvel" required>
-      <input name="subject" placeholder="Assunto" required>
-      <textarea name="message" placeholder="Mensagem" required></textarea>
+      <input name="name" placeholder="Nome completo" data-i18n-placeholder="placeholderName" required>
+      <input name="contact" placeholder="Email ou telemóvel" data-i18n-placeholder="placeholderContact" required>
+      <input name="subject" placeholder="Assunto" data-i18n-placeholder="placeholderSubject" required>
+      <textarea name="message" placeholder="Mensagem" data-i18n-placeholder="placeholderMessage" required></textarea>
       <div style="display:flex; gap:0.5rem; justify-content:flex-end; margin-top:0.5rem;">
-        <button type="submit" class="btn-primary">Enviar</button>
-        <button type="button" class="btn-ghost modal-close">Fechar</button>
+        <button type="submit" class="btn-primary" data-i18n="modalSend">Enviar</button>
+        <button type="button" class="btn-ghost modal-close" data-i18n="modalClose">Fechar</button>
       </div>
     </form>
   </div>
@@ -718,7 +751,7 @@
         var messageVal = messageInput.value.trim();
 
         if (!nameVal || !contactVal || !subjectVal || !messageVal) {
-          alert('Por favor preencha todos os campos antes de enviar.');
+          alert(window.translateText ? window.translateText('formFillAll') : 'Por favor preencha todos os campos antes de enviar.');
           return;
         }
 
@@ -737,6 +770,260 @@
       });
     }
   })();
+</script>
+
+<script>
+(function(){
+  var translations = {
+    pt: {
+      navSkills: 'Skills',
+      navProjects: 'Projetos',
+      navAbout: 'Sobre',
+      contactButton: 'Contactar',
+      heroBadge: 'Disponível para projetos freelance',
+      heroSubtitle: 'A finalizar a licenciatura em Informática, especializado em desenvolvimento web, fullstack e aplicações mobile. Transformo ideias em produtos digitais que funcionam.',
+      heroProjects: 'Ver projetos',
+      heroDownloadCV: 'Download CV',
+      skillsLabel: 'O que faço',
+      skillsTitle: 'Skills & especialidades',
+      skillFrontend: 'Frontend',
+      skillFrontendDesc: 'React, HTML/CSS, interfaces responsivas e acessíveis',
+      skillBackend: 'Backend',
+      skillBackendDesc: 'Node.js, REST APIs, autenticação e bases de dados',
+      skillMobile: 'Mobile',
+      skillMobileDesc: 'Flutter e React Native para iOS e Android',
+      skillDatabase: 'Base de dados',
+      skillDatabaseDesc: 'PostgreSQL, MongoDB, modelação e otimização',
+      projectsLabel: 'Portfolio',
+      projectsTitle: 'Projetos em destaque',
+      projectEcommerceTitle: 'Plataforma E-commerce',
+      projectEcommerceDesc: 'Loja online completa com carrinho, pagamentos e painel de gestão para o vendedor. Desenvolvida do zero com foco em performance e UX.',
+      projectHabitsTitle: 'App de Hábitos',
+      projectHabitsDesc: 'Aplicação mobile para tracking de hábitos com notificações e estatísticas.',
+      projectApiTitle: 'API de Gestão',
+      projectApiDesc: 'API RESTful com autenticação JWT para sistema de gestão de clientes.',
+      aboutLabel: 'Sobre mim',
+      aboutTitle: 'Quem sou',
+      aboutPara1: 'Sou Filipe Braz, a finalizar a licenciatura em Informática e apaixonado por criar produtos digitais de raiz — desde a interface até ao servidor.',
+      aboutPara2: 'Tenho experiência tanto em web, fullstack como em desenvolvimento mobile, o que me permite entregar soluções completas sem depender de terceiros.',
+      aboutPara3: 'Procuro projetos freelance onde possa criar valor real para negócios e pessoas reais.',
+      statExperience: 'anos de experiência',
+      statProjects: 'projetos concluídos',
+      statPlatforms: 'plataformas mobile',
+      statCheese: 'queijo consumido',
+      contactLabel: 'Vamos trabalhar juntos',
+      contactTitle: 'Tens um projeto em mente?',
+      contactText: 'Estou disponível para projetos freelance — web, mobile ou fullstack. Fala comigo sem compromisso.',
+      contactLinkedIn: '💼 LinkedIn',
+      contactGitHub: '🐙 GitHub',
+      footerCopyright: '© 2026 Filipe Braz - rfcb solutions',
+      footerMadeWith: 'Feito com código & queijo 🧀',
+      modalTitle: 'Contactar',
+      placeholderName: 'Nome completo',
+      placeholderContact: 'Email ou telemóvel',
+      placeholderSubject: 'Assunto',
+      placeholderMessage: 'Mensagem',
+      modalSend: 'Enviar',
+      modalClose: 'Fechar',
+      formFillAll: 'Por favor preencha todos os campos antes de enviar.'
+    },
+    en: {
+      navSkills: 'Skills',
+      navProjects: 'Projects',
+      navAbout: 'About',
+      contactButton: 'Contact',
+      heroBadge: 'Available for freelance projects',
+      heroSubtitle: 'Finishing a degree in Computer Science, specialized in fullstack web development and mobile apps. I turn ideas into digital products that work.',
+      heroProjects: 'See projects',
+      heroDownloadCV: 'Download CV',
+      skillsLabel: 'What I do',
+      skillsTitle: 'Skills & specialties',
+      skillFrontend: 'Frontend',
+      skillFrontendDesc: 'React, HTML/CSS, responsive and accessible interfaces',
+      skillBackend: 'Backend',
+      skillBackendDesc: 'Node.js, REST APIs, authentication and databases',
+      skillMobile: 'Mobile',
+      skillMobileDesc: 'Flutter and React Native for iOS and Android',
+      skillDatabase: 'Database',
+      skillDatabaseDesc: 'PostgreSQL, MongoDB, modeling and optimization',
+      projectsLabel: 'Portfolio',
+      projectsTitle: 'Featured projects',
+      projectEcommerceTitle: 'E-commerce Platform',
+      projectEcommerceDesc: 'Complete online store with cart, payments and admin dashboard. Built from scratch with performance and UX in mind.',
+      projectHabitsTitle: 'Habits App',
+      projectHabitsDesc: 'Mobile app for habit tracking with notifications and statistics.',
+      projectApiTitle: 'Management API',
+      projectApiDesc: 'RESTful API with JWT authentication for client management systems.',
+      aboutLabel: 'About me',
+      aboutTitle: 'Who I am',
+      aboutPara1: 'I am Filipe Braz, finishing a degree in Computer Science and passionate about creating digital products from scratch — from interface to server.',
+      aboutPara2: 'I have experience in both fullstack web and mobile development, allowing me to deliver complete solutions without relying on third parties.',
+      aboutPara3: 'I am looking for freelance projects where I can create real value for businesses and people.',
+      statExperience: 'years of experience',
+      statProjects: 'projects completed',
+      statPlatforms: 'mobile platforms',
+      statCheese: 'cheese consumed',
+      contactLabel: 'Let’s work together',
+      contactTitle: 'Got a project in mind?',
+      contactText: 'I am available for freelance work — web, mobile or fullstack. Talk to me with no obligation.',
+      contactLinkedIn: '💼 LinkedIn',
+      contactGitHub: '🐙 GitHub',
+      footerCopyright: '© 2026 Filipe Braz - rfcb solutions',
+      footerMadeWith: 'Made with code & cheese 🧀',
+      modalTitle: 'Contact',
+      placeholderName: 'Full name',
+      placeholderContact: 'Email or phone',
+      placeholderSubject: 'Subject',
+      placeholderMessage: 'Message',
+      modalSend: 'Send',
+      modalClose: 'Close',
+      formFillAll: 'Please fill in all fields before sending.'
+    },
+    de: {
+      navSkills: 'Skills',
+      navProjects: 'Projekte',
+      navAbout: 'Über',
+      contactButton: 'Kontakt',
+      heroBadge: 'Verfügbar für Freelance-Projekte',
+      heroSubtitle: 'Abschluss des Studiums der Informatik, spezialisiert auf Fullstack-Webentwicklung und mobile Apps. Ich verwandle Ideen in funktionierende digitale Produkte.',
+      heroProjects: 'Projekte ansehen',
+      heroDownloadCV: 'CV herunterladen',
+      skillsLabel: 'Was ich mache',
+      skillsTitle: 'Skills & Spezialitäten',
+      skillFrontend: 'Frontend',
+      skillFrontendDesc: 'React, HTML/CSS, responsive und barrierefreie Interfaces',
+      skillBackend: 'Backend',
+      skillBackendDesc: 'Node.js, REST APIs, Authentifizierung und Datenbanken',
+      skillMobile: 'Mobile',
+      skillMobileDesc: 'Flutter und React Native für iOS und Android',
+      skillDatabase: 'Datenbank',
+      skillDatabaseDesc: 'PostgreSQL, MongoDB, Modellierung und Optimierung',
+      projectsLabel: 'Portfolio',
+      projectsTitle: 'Ausgewählte Projekte',
+      projectEcommerceTitle: 'E-Commerce-Plattform',
+      projectEcommerceDesc: 'Kompletter Online-Shop mit Warenkorb, Zahlungen und Admin-Dashboard. Von Grund auf mit Fokus auf Performance und UX entwickelt.',
+      projectHabitsTitle: 'Habit-App',
+      projectHabitsDesc: 'Mobile App zur Gewohnheitsverfolgung mit Benachrichtigungen und Statistiken.',
+      projectApiTitle: 'Verwaltungs-API',
+      projectApiDesc: 'RESTful API mit JWT-Authentifizierung für Kundenverwaltungssysteme.',
+      aboutLabel: 'Über mich',
+      aboutTitle: 'Wer ich bin',
+      aboutPara1: 'Ich bin Filipe Braz, schließe ein Informatikstudium ab und bin leidenschaftlich darin, digitale Produkte von Grund auf zu entwickeln — von der Oberfläche bis zum Server.',
+      aboutPara2: 'Ich habe Erfahrung in sowohl Fullstack-Web- als auch Mobile-Entwicklung, sodass ich komplette Lösungen liefern kann, ohne auf Dritte angewiesen zu sein.',
+      aboutPara3: 'Ich suche Freelance-Projekte, bei denen ich echten Mehrwert für Unternehmen und Menschen schaffen kann.',
+      statExperience: 'Jahre Erfahrung',
+      statProjects: 'abgeschlossene Projekte',
+      statPlatforms: 'mobile Plattformen',
+      statCheese: 'Käse konsumiert',
+      contactLabel: 'Lass uns zusammenarbeiten',
+      contactTitle: 'Hast du ein Projekt im Kopf?',
+      contactText: 'Ich stehe für Freelance-Arbeiten zur Verfügung — Web, Mobile oder Fullstack. Sprich mich unverbindlich an.',
+      contactLinkedIn: '💼 LinkedIn',
+      contactGitHub: '🐙 GitHub',
+      footerCopyright: '© 2026 Filipe Braz - rfcb solutions',
+      footerMadeWith: 'Mit Code & Käse gemacht 🧀',
+      modalTitle: 'Kontakt',
+      placeholderName: 'Vollständiger Name',
+      placeholderContact: 'E-Mail oder Telefon',
+      placeholderSubject: 'Betreff',
+      placeholderMessage: 'Nachricht',
+      modalSend: 'Senden',
+      modalClose: 'Schließen',
+      formFillAll: 'Bitte fülle alle Felder aus, bevor du sendest.'
+    },
+    es: {
+      navSkills: 'Skills',
+      navProjects: 'Proyectos',
+      navAbout: 'Sobre',
+      contactButton: 'Contactar',
+      heroBadge: 'Disponible para proyectos freelance',
+      heroSubtitle: 'Finalizando la licenciatura en Informática, especializado en desarrollo web, fullstack y aplicaciones móviles. Transformo ideas en productos digitales que funcionan.',
+      heroProjects: 'Ver proyectos',
+      heroDownloadCV: 'Descargar CV',
+      skillsLabel: 'Lo que hago',
+      skillsTitle: 'Skills y especialidades',
+      skillFrontend: 'Frontend',
+      skillFrontendDesc: 'React, HTML/CSS, interfaces responsivas y accesibles',
+      skillBackend: 'Backend',
+      skillBackendDesc: 'Node.js, REST APIs, autenticación y bases de datos',
+      skillMobile: 'Mobile',
+      skillMobileDesc: 'Flutter y React Native para iOS y Android',
+      skillDatabase: 'Base de datos',
+      skillDatabaseDesc: 'PostgreSQL, MongoDB, modelado y optimización',
+      projectsLabel: 'Portafolio',
+      projectsTitle: 'Proyectos destacados',
+      projectEcommerceTitle: 'Plataforma E-commerce',
+      projectEcommerceDesc: 'Tienda online completa con carrito, pagos y panel de administración para el vendedor. Desarrollada desde cero con foco en rendimiento y UX.',
+      projectHabitsTitle: 'App de Hábitos',
+      projectHabitsDesc: 'Aplicación móvil para seguimiento de hábitos con notificaciones y estadísticas.',
+      projectApiTitle: 'API de Gestión',
+      projectApiDesc: 'API RESTful con autenticación JWT para sistema de gestión de clientes.',
+      aboutLabel: 'Sobre mí',
+      aboutTitle: 'Quién soy',
+      aboutPara1: 'Soy Filipe Braz, finalizando la licenciatura en Informática y apasionado por crear productos digitales desde cero — desde la interfaz hasta el servidor.',
+      aboutPara2: 'Tengo experiencia tanto en web, fullstack como en desarrollo móvil, lo que me permite entregar soluciones completas sin depender de terceros.',
+      aboutPara3: 'Busco proyectos freelance donde pueda crear valor real para negocios y personas.',
+      statExperience: 'años de experiencia',
+      statProjects: 'proyectos completados',
+      statPlatforms: 'plataformas móviles',
+      statCheese: 'queso consumido',
+      contactLabel: 'Trabajemos juntos',
+      contactTitle: '¿Tienes un proyecto en mente?',
+      contactText: 'Estoy disponible para proyectos freelance — web, mobile o fullstack. Habla conmigo sin compromiso.',
+      contactLinkedIn: '💼 LinkedIn',
+      contactGitHub: '🐙 GitHub',
+      footerCopyright: '© 2026 Filipe Braz - rfcb solutions',
+      footerMadeWith: 'Hecho con código y queso 🧀',
+      modalTitle: 'Contactar',
+      placeholderName: 'Nombre completo',
+      placeholderContact: 'Email o teléfono',
+      placeholderSubject: 'Asunto',
+      placeholderMessage: 'Mensaje',
+      modalSend: 'Enviar',
+      modalClose: 'Cerrar',
+      formFillAll: 'Por favor completa todos los campos antes de enviar.'
+    }
+  };
+
+  function getTranslatedText(lang, key) {
+    return (translations[lang] && translations[lang][key]) || translations.pt[key] || '';
+  }
+
+  window.translateText = function(key) {
+    var lang = document.documentElement.lang || 'pt';
+    return getTranslatedText(lang, key);
+  };
+
+  function translatePage(lang) {
+    var elements = document.querySelectorAll('[data-i18n]');
+    elements.forEach(function(el) {
+      var key = el.getAttribute('data-i18n');
+      if (!key) return;
+      el.textContent = getTranslatedText(lang, key);
+    });
+
+    var placeholders = document.querySelectorAll('[data-i18n-placeholder]');
+    placeholders.forEach(function(el) {
+      var key = el.getAttribute('data-i18n-placeholder');
+      if (!key) return;
+      el.placeholder = getTranslatedText(lang, key);
+    });
+
+    document.documentElement.lang = lang;
+  }
+
+  var langButtons = document.querySelectorAll('.lang-switcher .lang-btn');
+  langButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+      var lang = this.getAttribute('data-lang');
+      translatePage(lang);
+      langButtons.forEach(function(btn) { btn.classList.remove('active'); });
+      this.classList.add('active');
+    });
+  });
+
+  translatePage('pt');
+})();
 </script>
 
 </body>
