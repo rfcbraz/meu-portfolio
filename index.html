@@ -538,7 +538,7 @@
     <span class="line2">Braz.</span>
   </h1>
   <p class="hero-sub" data-i18n="heroSubtitle">
-     A finalizar a licenciatura em Informática, especializado em <strong style="color:var(--text)">desenvolvimento web, fullstack</strong> e <strong style="color:var(--text)">aplicações mobile</strong>. Transformo ideias em produtos digitais que funcionam.
+     A finalizar a licenciatura em Informática, specialized em <strong style="color:var(--text)">desenvolvimento web, fullstack</strong> e <strong style="color:var(--text)">aplicações mobile</strong>. Transformo ideias em produtos digitais que funcionam.
   </p>
   <div class="hero-actions">
     <a class="btn-primary" href="#projects" data-i18n="heroProjects">Ver projetos</a>
@@ -679,21 +679,21 @@
   <span data-i18n="footerMadeWith">Feito com código & queijo 🧀</span>
 </footer>
 
-<!-- Contact modal -->
 <div id="contact-modal" class="modal" aria-hidden="true">
   <div class="modal-backdrop" data-close></div>
   <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
     <button class="modal-close" aria-label="Fechar">×</button>
     <h2 id="contact-modal-title" data-i18n="modalTitle">Contactar</h2>
-    <!-- SUBMISSION NATÍVA DO HTML SEM USAR FETCH -->
-    <form id="contact-form" action="https://formsubmit.cloud/f/f17d87f5-6441-4acb-a145-e08e96c34385/" method="POST" autocomplete="off">
+    
+    <form id="contact-form" action="https://formsubmit.co/filipebraz@rfcb.pt" method="POST" autocomplete="off">
       <input name="name" placeholder="Nome completo" data-i18n-placeholder="placeholderName" required>
       <input name="email" placeholder="Email ou telemóvel" data-i18n-placeholder="placeholderContact" required>
       <input name="subject" placeholder="Assunto" data-i18n-placeholder="placeholderSubject" required>
       <textarea name="message" placeholder="Mensagem" data-i18n-placeholder="placeholderMessage" required></textarea>
       
-      <!-- Redirecionamento configurado para voltar à página inicial -->
       <input type="hidden" name="_next" value="https://rfcb.pt">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
       
       <div style="display:flex; gap:0.5rem; justify-content:flex-end; margin-top:0.5rem;">
         <button type="submit" class="btn-primary" data-i18n="modalSend">Enviar</button>
@@ -752,7 +752,7 @@
 
     if(form){
       form.addEventListener('submit', function(e){
-        // Não prevenimos o envio padrão, o browser vai submeter nativamente!
+        // IMPORTANTE: Deixamos o browser submeter por si próprio!
         var submitBtn = form.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
         submitBtn.innerText = 'A enviar...';
