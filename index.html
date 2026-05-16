@@ -692,8 +692,7 @@
       <input name="subject" placeholder="Assunto" data-i18n-placeholder="placeholderSubject" required>
       <textarea name="message" placeholder="Mensagem" data-i18n-placeholder="placeholderMessage" required></textarea>
       
-      <!-- Crucial parameter for FormSubmit to return cleanly in background -->
-      <input type="hidden" name="_json" value="true">
+      <input type="hidden" name="_next" value="https://rfcb.pt">
       
       <div style="display:flex; gap:0.5rem; justify-content:flex-end; margin-top:0.5rem;">
         <button type="submit" class="btn-primary" data-i18n="modalSend">Enviar</button>
@@ -752,38 +751,11 @@
 
     if(form){
       form.addEventListener('submit', function(e){
-        e.preventDefault();
-
+        // Removemos o e.preventDefault() para deixar o HTML enviar nativamente
+        
         var submitBtn = form.querySelector('button[type="submit"]');
-        var originalBtnText = submitBtn.innerText;
         submitBtn.disabled = true;
         submitBtn.innerText = 'A enviar...';
-
-        // Native FormData method shielded against ad-blockers and tracking protections
-        fetch(form.action, {
-          method: form.method,
-          body: new FormData(form),
-          headers: {
-            'Accept': 'application/json'
-          }
-        })
-        .then(function(response) {
-          if (response.ok) {
-            alert('Mensagem enviada com sucesso!');
-            form.reset();
-            closeModal();
-          } else {
-            alert('Ocorreu um erro ao processar o envio. Tente novamente.');
-          }
-        })
-        .catch(function(error) {
-          console.error('Erro detetado:', error);
-          alert('Erro de envio. Se persistir, desative temporariamente o Ad-Blocker/Proteções do Opera GX para este site.');
-        })
-        .finally(function() {
-          submitBtn.disabled = false;
-          submitBtn.innerText = originalBtnText;
-        });
       });
     }
   })();
