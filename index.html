@@ -712,27 +712,30 @@
     <h2 id="contact-modal-title" data-i18n="modalTitle">Contactar</h2>
     
     <form id="contact-form" autocomplete="off">
-      <input type="hidden" name="access_key" value="248e71dc-0ba1-4ef5-9f31-704a2841c40b">
-      <input type="hidden" name="subject" value="Novo contacto — Portfólio Filipe Braz">
-      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="false">
-      
-      <label for="name" class="sr-only">Nome completo</label>
-      <input id="name" name="name" placeholder="Nome completo" data-i18n-placeholder="placeholderName" required>
-      
-      <label for="email" class="sr-only">Email</label>
-      <input id="email" type="email" name="email" placeholder="Email" data-i18n-placeholder="placeholderContact" required>
-      
-      <label for="subject-input" class="sr-only">Assunto</label>
-      <input id="subject-input" name="subject" placeholder="Assunto" data-i18n-placeholder="placeholderSubject" required>
-      
-      <label for="message" class="sr-only">Mensagem</label>
-      <textarea id="message" name="message" placeholder="Mensagem" data-i18n-placeholder="placeholderMessage" required></textarea>
-      
-      <div style="display:flex; gap:0.5rem; justify-content:flex-end; margin-top:0.5rem;">
-        <button type="submit" class="btn-primary" data-i18n="modalSend">Enviar</button>
-        <button type="button" class="btn-ghost modal-close" data-i18n="modalClose">Fechar</button>
-      </div>
-    </form>
+  <input type="hidden" name="access_key" value="248e71dc-0ba1-4ef5-9f31-704a2841c40b">
+  <input type="hidden" name="subject" value="Novo contacto — Portfólio Filipe Braz">
+  
+  <div style="display: none;" aria-hidden="true">
+    <input type="text" name="_gotcha" id="honeypot-field" tabindex="-1" autocomplete="off">
+  </div>
+  
+  <label for="name" class="sr-only">Nome</label>
+  <input id="name" name="name" placeholder="Nome completo" data-i18n-placeholder="placeholderName" required>
+  
+  <label for="email" class="sr-only">Email</label>
+  <input id="email" type="email" name="email" placeholder="Email" data-i18n-placeholder="placeholderContact" required>
+  
+  <label for="subject-input" class="sr-only">Assunto</label>
+  <input id="subject-input" name="subject" placeholder="Assunto" data-i18n-placeholder="placeholderSubject" required>
+  
+  <label for="message" class="sr-only">Mensagem</label>
+  <textarea id="message" name="message" placeholder="Mensagem" data-i18n-placeholder="placeholderMessage" required></textarea>
+  
+  <div style="display:flex; gap:0.5rem; justify-content:flex-end; margin-top:0.5rem;">
+    <button type="submit" class="btn-primary" data-i18n="modalSend">Enviar</button>
+    <button type="button" class="btn-ghost modal-close" data-i18n="modalClose">Fechar</button>
+  </div>
+</form>
   </div>
 </div>
 
@@ -753,13 +756,36 @@
   })();
 
   (function(){
-    var contactBtn = document.getElementById('contact-btn');
+var contactBtn = document.getElementById('contact-btn');
     var emailTriggers = document.querySelectorAll('.email-trigger');
     var modal = document.getElementById('contact-modal');
     if(!modal) return;
     var modalCloseButtons = modal.querySelectorAll('.modal-close');
     var backdrop = modal.querySelector('.modal-backdrop');
     var form = modal.querySelector('#contact-form');
+
+    // --- ANTES DO ENVIO: VALIDAÇÃO ANTI-SPAM ---
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        // 1. Ir buscar o valor do campo honeypot
+        var honeypot = document.getElementById('honeypot-field')?.value;
+        
+        // 2. Se o robô preencheu (não está vazio), bloqueamos o envio silenciosamente
+        if (honeypot && honeypot.trim() !== "") {
+          e.preventDefault(); // Trava o envio para a API externa
+          console.warn("Spam bot detectado e bloqueado.");
+          
+          // Simulamos que correu bem para o bot achar que teve sucesso e ir embora
+          form.reset();
+          if(modal) modal.classList.remove('open');
+          alert(translateText('formSuccess') || 'Mensagem enviada com sucesso!'); 
+          return;
+        }
+        
+        // Se o honeypot estiver vazio (humano real), o browser continua 
+        // e executa o teu código fetch que já tens aí em baixo para enviar o email.
+      });
+    }
 
     function openModal(){
       modal.classList.add('show');
