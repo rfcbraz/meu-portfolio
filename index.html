@@ -808,20 +808,59 @@ var contactBtn = document.getElementById('contact-btn');
     if(backdrop) backdrop.addEventListener('click', closeModal);
 
     document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+    function sanitizeInput(str) {
+      if (typeof str !== 'string') return str;
+      return str
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#x27;");
+    }
+// 1. Função utilitária para evitar injeção de HTML/Scripts (XSS)
+    // Converte caracteres como < e > nas suas respetivas entidades HTML
+    function sanitizeInput(str) {
+      if (typeof str !== 'string') return str;
+      return str
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#x27;");
+    }
 
     if(form){
       form.addEventListener('submit', async function(e){
         e.preventDefault();
+
+        // 2. VERIFICAÇÃO DO HONEYPOT (ANTI-SPAM)
+        // Se o robô preencheu o campo invisível, travamos o envio silenciosamente
+        var honeypot = document.getElementById('honeypot-field')?.value;
+        if (honeypot && honeypot.trim() !== "") {
+          console.warn("Spam bot detectado e bloqueado.");
+          form.reset();
+          setTimeout(closeModal, 500);
+          return; // Aborta a execução e não gasta créditos da API
+        }
+
         var submitBtn = form.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
         submitBtn.innerText = 'A enviar...';
 
         try {
-          const data = Object.fromEntries(new FormData(form));
+          // Extrai os dados originais do formulário
+          const rawData = Object.fromEntries(new FormData(form));
+          
+          // 3. SANITIZAÇÃO DOS DADOS
+          // Percorre todas as chaves do formulário (nome, email, assunto, mensagem) e limpa o texto
+          const sanitizedData = {};
+          for (const key in rawData) {
+            sanitizedData[key] = sanitizeInput(rawData[key]);
+          }
+
+          // Enviamos os dados já limpos para o Web3Forms
           const res = await fetch('https://api.web3forms.com/submit', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-            body: JSON.stringify(data)
+            body: JSON.stringify(sanitizedData)
           });
           const json = await res.json();
 
