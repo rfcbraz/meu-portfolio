@@ -17,7 +17,7 @@
   <meta name="twitter:url" content="https://www.rfcb.pt/">
   <meta name="twitter:title" content="Filipe Braz | Web & Mobile Fullstack Developer">
   <meta name="twitter:description" content="Transformo ideias em produtos digitais que funcionam. Especialista em React, Node.js e Flutter.">
-  <meta name="twitter:image" content="https://www.rfcb.pt/og-image.png">
+  <meta name="twitter:image" content="https://www.rfcb.pt/og-image.jpg">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='8' fill='%2322c55e'/></svg>" type="image/svg+xml">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
   <style>
@@ -1086,25 +1086,6 @@
       window.history.pushState({ path: newUrl }, '', newUrl);
     });
   });
-
-  window.translateText = function(key) {
-    var lang = document.querySelector('.lang-btn.active')?.getAttribute('data-lang') || 'pt';
-    return translations[lang]?.[key] || translations['pt']?.[key] || key;
-  };
-})();
-
-  // Lang button click handler
-  document.querySelectorAll('.lang-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-      applyTranslations(btn.getAttribute('data-lang'));
-    });
-  });
-
-  // Apply default language on load
-  var defaultLang = document.querySelector('.lang-btn.active')?.getAttribute('data-lang') || 'pt';
-  applyTranslations(defaultLang);
 
   window.translateText = function(key) {
     var lang = document.querySelector('.lang-btn.active')?.getAttribute('data-lang') || 'pt';
