@@ -1032,11 +1032,11 @@
     }
   };
 
+  // 1. Função de tradução atualizada (com a mudança da tag HTML lang incluída)
   function applyTranslations(lang) {
     var t = translations[lang] || translations['pt'];
 
-    // ATUALIZAÇÃO CRÍTICA: Altera a tag <html> para o idioma correto
-    document.documentElement.lang = lang;
+    document.documentElement.lang = lang; // Importante para SEO e Acessibilidade
 
     // Text content
     document.querySelectorAll('[data-i18n]').forEach(function(el) {
@@ -1050,6 +1050,48 @@
       if(t[key]) el.setAttribute('placeholder', t[key]);
     });
   }
+
+  // 2. Ler o idioma do URL no carregamento inicial (ex: rfcb.pt/?lang=en)
+  var urlParams = new URLSearchParams(window.location.search);
+  var langFromUrl = urlParams.get('lang');
+  
+  // 3. Definir o idioma (URL tem prioridade, senão usa PT)
+  var defaultLang = langFromUrl || 'pt';
+  
+  // 4. Atualizar os botões visualmente no carregamento
+  document.querySelectorAll('.lang-btn').forEach(function(b) { 
+    b.classList.remove('active'); 
+    if (b.getAttribute('data-lang') === defaultLang) {
+      b.classList.add('active');
+    }
+  });
+
+  // Aplica as traduções iniciais
+  applyTranslations(defaultLang);
+
+  // 5. O que acontece quando clicas num botão de idioma
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var selectedLang = btn.getAttribute('data-lang');
+      
+      // Muda a classe ativa
+      document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      
+      // Aplica o texto
+      applyTranslations(selectedLang);
+
+      // ATUALIZA O URL SILENCIOSAMENTE SEM RECARREGAR A PÁGINA
+      var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?lang=' + selectedLang;
+      window.history.pushState({ path: newUrl }, '', newUrl);
+    });
+  });
+
+  window.translateText = function(key) {
+    var lang = document.querySelector('.lang-btn.active')?.getAttribute('data-lang') || 'pt';
+    return translations[lang]?.[key] || translations['pt']?.[key] || key;
+  };
+})();
 
   // Lang button click handler
   document.querySelectorAll('.lang-btn').forEach(function(btn) {
