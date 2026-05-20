@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Gerador de Banner Open Graph</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #1a1a24; /* Fundo mais claro para contrastar com o banner */
+    }
+    
+    /* O contentor com as medidas exatas exigidas pelas redes sociais */
+    .og-container {
+      width: 1200px;
+      height: 630px;
+      background: #0a0a0f;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 100px;
+      box-sizing: border-box;
+      font-family: 'DM Sans', sans-serif;
+      color: #f0eeff;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* Efeito de brilho de fundo semelhante ao teu contact box */
+    .og-container::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      right: -200px;
+      width: 800px;
+      height: 800px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,92,252,0.15), transparent 70%);
+      pointer-events: none;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(124,92,252,0.12);
+      border: 2px solid rgba(124,92,252,0.3);
+      border-radius: 100px;
+      padding: 12px 30px;
+      font-size: 24px;
+      color: #c084fc;
+      margin-bottom: 40px;
+      width: max-content;
+      font-weight: 500;
+    }
+
+    .dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 12px 2px rgba(34, 197, 94, 0.4);
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 110px;
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      margin: 0 0 20px 0;
+    }
+
+    h1 span {
+      background: linear-gradient(90deg, #7c5cfc, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p {
+      font-size: 38px;
+      color: #8b85a0;
+      margin: 0 0 60px 0;
+      max-width: 800px;
+      line-height: 1.4;
+    }
+
+    .tags {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      background: rgba(255,255,255,0.05);
+      border: 2px solid rgba(255,255,255,0.12);
+      padding: 12px 24px;
+      border-radius: 100px;
+      font-size: 24px;
+      color: #f0eeff;
+    }
+    
+    .logo-bottom {
+      position: absolute;
+      bottom: 60px;
+      right: 100px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 32px;
+      color: #c084fc;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="og-container" id="capture-area">
+    <div class="badge"><span class="dot"></span> Disponível para projetos freelance</div>
+    <h1>Filipe <span>Braz.</span></h1>
+    <p>Web & Mobile Fullstack Developer</p>
+    
+    <div class="tags">
+      <span class="tag">React</span>
+      <span class="tag">Node.js</span>
+      <span class="tag">Flutter</span>
+      <span class="tag">PostgreSQL</span>
+    </div>
+
+    <div class="logo-bottom">rfcb.pt</div>
+  </div>
+
+</body>
+</html>

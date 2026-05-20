@@ -4,8 +4,20 @@
   <meta name="google-site-verification" content="aeueU3hCNbYLgqUXGCjDrGv8ix1Fo4vOA2StyUZlclM" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Filipe Braz — Portfólio Web</title>
-  <meta name="description" content="Portfólio de Filipe Braz, desenvolvedor web, fullstack e aplicações mobile.">
+  <title>Filipe Braz | Web & Mobile Fullstack Developer</title>
+  <meta name="description" content="Portfólio de Filipe Braz, desenvolvedor web e mobile. Especialista em React, Node.js, Flutter e PostgreSQL. Disponível para projetos freelance.">
+  
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.rfcb.pt/">
+  <meta property="og:title" content="Filipe Braz | Web & Mobile Fullstack Developer">
+  <meta property="og:description" content="Transformo ideias em produtos digitais que funcionam. Especialista em React, Node.js e Flutter.">
+  <meta property="og:image" content="https://www.rfcb.pt/og-image.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://www.rfcb.pt/">
+  <meta name="twitter:title" content="Filipe Braz | Web & Mobile Fullstack Developer">
+  <meta name="twitter:description" content="Transformo ideias em produtos digitais que funcionam. Especialista em React, Node.js e Flutter.">
+  <meta name="twitter:image" content="https://www.rfcb.pt/og-image.jpg">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='8' fill='%2322c55e'/></svg>" type="image/svg+xml">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
   <style>
@@ -543,7 +555,7 @@
   </div>
   <button class="nav-cta" id="contact-btn" data-i18n="contactButton">Contactar</button>
 </nav>
-
+<main id="conteudo-principal">
 <div class="hero">
   <div class="hero-badge"><span class="dot" aria-hidden="true"></span><span data-i18n="heroBadge">Disponível para projetos freelance</span></div>
   <h1>
@@ -687,7 +699,7 @@
     </div>
   </div>
 </section>
-
+</main>
 <footer>
   <span data-i18n="footerCopyright">© 2026 Filipe Braz - rfcb solutions</span>
   <span data-i18n="footerMadeWith">Feito com código & queijo 🧀</span>
@@ -702,12 +714,19 @@
     <form id="contact-form" autocomplete="off">
       <input type="hidden" name="access_key" value="248e71dc-0ba1-4ef5-9f31-704a2841c40b">
       <input type="hidden" name="subject" value="Novo contacto — Portfólio Filipe Braz">
-      <input type="text" name="_gotcha" style="display:none">
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="false">
       
-      <input name="name" placeholder="Nome completo" data-i18n-placeholder="placeholderName" required>
-      <input type="email" name="email" placeholder="Email" data-i18n-placeholder="placeholderContact" required>
-      <input name="subject" placeholder="Assunto" data-i18n-placeholder="placeholderSubject" required>
-      <textarea name="message" placeholder="Mensagem" data-i18n-placeholder="placeholderMessage" required></textarea>
+      <label for="name" class="sr-only">Nome completo</label>
+      <input id="name" name="name" placeholder="Nome completo" data-i18n-placeholder="placeholderName" required>
+      
+      <label for="email" class="sr-only">Email</label>
+      <input id="email" type="email" name="email" placeholder="Email" data-i18n-placeholder="placeholderContact" required>
+      
+      <label for="subject-input" class="sr-only">Assunto</label>
+      <input id="subject-input" name="subject" placeholder="Assunto" data-i18n-placeholder="placeholderSubject" required>
+      
+      <label for="message" class="sr-only">Mensagem</label>
+      <textarea id="message" name="message" placeholder="Mensagem" data-i18n-placeholder="placeholderMessage" required></textarea>
       
       <div style="display:flex; gap:0.5rem; justify-content:flex-end; margin-top:0.5rem;">
         <button type="submit" class="btn-primary" data-i18n="modalSend">Enviar</button>
@@ -1015,6 +1034,9 @@
 
   function applyTranslations(lang) {
     var t = translations[lang] || translations['pt'];
+
+    // ATUALIZAÇÃO CRÍTICA: Altera a tag <html> para o idioma correto
+    document.documentElement.lang = lang;
 
     // Text content
     document.querySelectorAll('[data-i18n]').forEach(function(el) {
