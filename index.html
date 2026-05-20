@@ -741,51 +741,13 @@
 
 <script>
   (function(){
-    var nav = document.querySelector('nav');
-    var toggle = document.querySelector('.nav-toggle');
-    if(!toggle || !nav) return;
-    toggle.addEventListener('click', function(e){
-      e.stopPropagation();
-      var open = nav.classList.toggle('nav-open');
-      toggle.setAttribute('aria-expanded', open);
-    });
-    document.addEventListener('click', function(e){
-      if(!nav.classList.contains('nav-open')) return;
-      if(!nav.contains(e.target)) { nav.classList.remove('nav-open'); toggle.setAttribute('aria-expanded', 'false'); }
-    });
-  })();
-
-  (function(){
-var contactBtn = document.getElementById('contact-btn');
+    var contactBtn = document.getElementById('contact-btn');
     var emailTriggers = document.querySelectorAll('.email-trigger');
     var modal = document.getElementById('contact-modal');
     if(!modal) return;
     var modalCloseButtons = modal.querySelectorAll('.modal-close');
     var backdrop = modal.querySelector('.modal-backdrop');
     var form = modal.querySelector('#contact-form');
-
-    // --- ANTES DO ENVIO: VALIDAÇÃO ANTI-SPAM ---
-    if (form) {
-      form.addEventListener('submit', function(e) {
-        // 1. Ir buscar o valor do campo honeypot
-        var honeypot = document.getElementById('honeypot-field')?.value;
-        
-        // 2. Se o robô preencheu (não está vazio), bloqueamos o envio silenciosamente
-        if (honeypot && honeypot.trim() !== "") {
-          e.preventDefault(); // Trava o envio para a API externa
-          console.warn("Spam bot detectado e bloqueado.");
-          
-          // Simulamos que correu bem para o bot achar que teve sucesso e ir embora
-          form.reset();
-          if(modal) modal.classList.remove('open');
-          alert(translateText('formSuccess') || 'Mensagem enviada com sucesso!'); 
-          return;
-        }
-        
-        // Se o honeypot estiver vazio (humano real), o browser continua 
-        // e executa o teu código fetch que já tens aí em baixo para enviar o email.
-      });
-    }
 
     function openModal(){
       modal.classList.add('show');
@@ -808,16 +770,8 @@ var contactBtn = document.getElementById('contact-btn');
     if(backdrop) backdrop.addEventListener('click', closeModal);
 
     document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
-    function sanitizeInput(str) {
-      if (typeof str !== 'string') return str;
-      return str
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#x27;");
-    }
-// 1. Função utilitária para evitar injeção de HTML/Scripts (XSS)
-    // Converte caracteres como < e > nas suas respetivas entidades HTML
+
+    // Função utilitária para evitar injeção de HTML/Scripts (XSS)
     function sanitizeInput(str) {
       if (typeof str !== 'string') return str;
       return str
@@ -831,14 +785,13 @@ var contactBtn = document.getElementById('contact-btn');
       form.addEventListener('submit', async function(e){
         e.preventDefault();
 
-        // 2. VERIFICAÇÃO DO HONEYPOT (ANTI-SPAM)
-        // Se o robô preencheu o campo invisível, travamos o envio silenciosamente
+        // VERIFICAÇÃO DO HONEYPOT (ANTI-SPAM)
         var honeypot = document.getElementById('honeypot-field')?.value;
         if (honeypot && honeypot.trim() !== "") {
           console.warn("Spam bot detectado e bloqueado.");
           form.reset();
           setTimeout(closeModal, 500);
-          return; // Aborta a execução e não gasta créditos da API
+          return;
         }
 
         var submitBtn = form.querySelector('button[type="submit"]');
@@ -846,17 +799,14 @@ var contactBtn = document.getElementById('contact-btn');
         submitBtn.innerText = 'A enviar...';
 
         try {
-          // Extrai os dados originais do formulário
           const rawData = Object.fromEntries(new FormData(form));
           
-          // 3. SANITIZAÇÃO DOS DADOS
-          // Percorre todas as chaves do formulário (nome, email, assunto, mensagem) e limpa o texto
+          // SANITIZAÇÃO DOS DADOS (XSS)
           const sanitizedData = {};
           for (const key in rawData) {
             sanitizedData[key] = sanitizeInput(rawData[key]);
           }
 
-          // Enviamos os dados já limpos para o Web3Forms
           const res = await fetch('https://api.web3forms.com/submit', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
