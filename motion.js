@@ -100,39 +100,93 @@
         scrollTrigger: { trigger: title, start: 'top 88%', once: true }
       });
     });
-    // Cartões e textos entram de fora do ecrã, ligados ao scroll, cada um pelo lado mais próximo.
+    // Cartões e textos entram de fora do ecrã, cada um pelo lado mais próximo, e saem ao voltar para cima.
     var slideGroups = [
       '#skills .section-label', '.skill-card',
       '#projects .section-label', '.project-card',
       '#about .section-label', '.about-text p', '.stat-card'
     ];
+    var SLIDE_SECONDS = 1.4;
+    var NAV_CLEARANCE = 90;
+    // O elemento tem de estar no sítio quando esta referência chega ao topo da página.
+    var mustFinishBefore = {
+      '.skill-card': '#skills h2',
+      '.project-card': '.project-card.featured',
+      '.stat-card': '#about h2'
+    };
+    var slides = [];
     var alternate = 0;
+
+    function pageTop(el) {
+      var y = 0;
+      while (el) { y += el.offsetTop; el = el.offsetParent; }
+      return y;
+    }
+
+    function measureSlide(item) {
+      var el = item.el;
+      var offCentre = el.offsetLeft + el.offsetWidth / 2 - window.innerWidth / 2;
+      // Elementos centrados ou a toda a largura não têm lado próximo: alternam.
+      item.side = Math.abs(offCentre) < window.innerWidth * 0.06 ? item.fallbackSide : (offCentre < 0 ? -1 : 1);
+      item.distance = item.side < 0 ? el.offsetLeft + el.offsetWidth + 40 : window.innerWidth - el.offsetLeft + 40;
+      item.drawn = -1;
+    }
+
+    function drawSlide(item) {
+      if (item.t === item.drawn) return;
+      item.drawn = item.t;
+      if (item.t >= 1) {
+        item.el.style.transform = '';
+        return;
+      }
+      var rest = Math.pow(1 - item.t, 3);
+      item.el.style.transform = 'translate3d(' + (item.side * item.distance * rest).toFixed(1) + 'px,0,0) rotate(' + (item.side * 7 * rest).toFixed(2) + 'deg)';
+    }
+
     slideGroups.forEach(function (selector) {
       gsap.utils.toArray(selector).forEach(function (el, index) {
-        var fallbackSide = alternate++ % 2 === 0 ? -1 : 1;
-        function sideOf() {
-          var offCentre = el.offsetLeft + el.offsetWidth / 2 - window.innerWidth / 2;
-          // Elementos centrados ou a toda a largura não têm lado próximo: alternam.
-          if (Math.abs(offCentre) < window.innerWidth * 0.06) return fallbackSide;
-          return offCentre < 0 ? -1 : 1;
-        }
-        gsap.fromTo(el, {
-          x: function () {
-            return sideOf() < 0 ? -(el.offsetLeft + el.offsetWidth + 40) : window.innerWidth - el.offsetLeft + 40;
-          },
-          rotation: function () { return sideOf() * 7; }
-        }, {
-          x: 0,
-          rotation: 0,
-          ease: 'sine.out',
-          scrollTrigger: {
-            trigger: el,
-            start: 'top bottom',
-            end: 'top ' + (46 - (index % 4) * 4) + '%',
-            scrub: 1,
-            invalidateOnRefresh: true
+        var item = { el: el, t: 0, fallbackSide: alternate++ % 2 === 0 ? -1 : 1, delay: (index % 4) * 0.1, wait: (index % 4) * 0.1 };
+        var limit = mustFinishBefore[selector] ? document.querySelector(mustFinishBefore[selector]) : null;
+        measureSlide(item);
+        item.trigger = ScrollTrigger.create({
+          trigger: el,
+          start: 'top 92%',
+          end: function () {
+            var vh = window.innerHeight;
+            var top = pageTop(el);
+            var start = top - vh * 0.92;
+            var end = top - vh * 0.72;
+            // Em ecrãs com uma só coluna, a referência pode estar muito acima do elemento.
+            if (limit && limit !== el && window.innerWidth > 900) end = Math.min(end, pageTop(limit) - NAV_CLEARANCE);
+            return Math.max(start + 20, end);
           }
         });
+        slides.push(item);
+        drawSlide(item);
+      });
+    });
+
+    // O tempo move o elemento devagar; o scroll garante que chega a tempo, mesmo a descer depressa.
+    gsap.ticker.add(function (time, deltaMs) {
+      var dt = Math.min(0.1, deltaMs / 1000);
+      slides.forEach(function (item) {
+        var scrolled = item.trigger.progress;
+        if (scrolled > 0) {
+          if (item.wait > 0) item.wait -= dt;
+          else item.t = Math.min(1, item.t + dt / SLIDE_SECONDS);
+        } else {
+          item.wait = item.delay;
+          item.t = Math.max(0, item.t - dt / SLIDE_SECONDS);
+        }
+        item.t = Math.max(item.t, scrolled);
+        drawSlide(item);
+      });
+    });
+
+    ScrollTrigger.addEventListener('refresh', function () {
+      slides.forEach(function (item) {
+        measureSlide(item);
+        drawSlide(item);
       });
     });
     gsap.utils.toArray('.stat-num[data-count]').forEach(function (el) {

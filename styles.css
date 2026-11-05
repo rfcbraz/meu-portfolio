@@ -197,6 +197,8 @@ html.motion .hero-reveal { display: block; }
   color: var(--ink); opacity: 0.72; white-space: pre; overflow: hidden;
   columns: 2; column-gap: 2rem;
 }
+/* Fundo opaco: o código passa por trás do texto pequeno, em vez de se misturar com ele. */
+.is-clone .hero-foot, .is-clone .hero-badge { background-color: var(--bg); box-shadow: 0 0 0 0.6rem var(--bg); }
 .is-clone .hero-sub, .is-clone .hero-sub strong, .is-clone .hero-hint { color: var(--ink); }
 .is-clone .hero-line2 { color: var(--ink); }
 .is-clone .dot { background: #0b7a34; box-shadow: none; }
