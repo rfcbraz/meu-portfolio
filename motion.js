@@ -124,12 +124,12 @@
         }, {
           x: 0,
           rotation: 0,
-          ease: 'power2.out',
+          ease: 'sine.out',
           scrollTrigger: {
             trigger: el,
             start: 'top bottom',
-            end: 'top ' + (76 - (index % 4) * 4) + '%',
-            scrub: 0.6,
+            end: 'top ' + (46 - (index % 4) * 4) + '%',
+            scrub: 1,
             invalidateOnRefresh: true
           }
         });
@@ -153,16 +153,29 @@
 
   /* ---------- Cor da página por secção ---------- */
 
-  gsap.utils.toArray('[data-section-theme]').forEach(function (section) {
-    ScrollTrigger.create({
-      trigger: section,
-      start: 'top 55%',
-      end: 'bottom 55%',
-      onToggle: function (self) {
-        if (self.isActive) body.setAttribute('data-theme', section.getAttribute('data-section-theme'));
-      }
+  // Calculada pela posição do scroll, para acertar também em saltos diretos e links internos.
+  var themed = gsap.utils.toArray('[data-section-theme]');
+  var themeTops = [];
+  var activeTheme = body.getAttribute('data-theme');
+
+  function measureThemes() {
+    themeTops = themed.map(function (section) {
+      return section.getBoundingClientRect().top + window.scrollY;
     });
-  });
+  }
+
+  function updateTheme(y, vh) {
+    var line = y + vh * 0.55;
+    var index = 0;
+    for (var i = 0; i < themeTops.length; i++) {
+      if (themeTops[i] <= line) index = i;
+    }
+    var theme = themed[index].getAttribute('data-section-theme');
+    if (theme !== activeTheme) {
+      activeTheme = theme;
+      body.setAttribute('data-theme', theme);
+    }
+  }
 
   /* ---------- Faixa de tecnologias reage à velocidade do scroll ---------- */
 
@@ -280,6 +293,7 @@
   var baseSize = 0;
   function measure() {
     var y = window.scrollY;
+    measureThemes();
     Object.keys(spots).forEach(function (key) {
       var r = spots[key].getBoundingClientRect();
       measured[key] = { x: r.left + r.width / 2, y: r.top + y + r.height / 2, size: r.width };
@@ -310,6 +324,8 @@
     var y = window.scrollY;
     var vh = window.innerHeight;
     var a = measured.hero, b = measured.skills, c = measured.about;
+
+    updateTheme(y, vh);
 
     if (y < hero.offsetHeight) {
       placeHoles(time);
