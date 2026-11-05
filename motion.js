@@ -106,16 +106,17 @@
       '#projects .section-label', '.project-card',
       '#about .section-label', '.about-text p', '.stat-card'
     ];
-    var SLIDE_SECONDS = 1.4;
     var NAV_CLEARANCE = 90;
-    // O elemento tem de estar no sítio quando esta referência chega ao topo da página.
-    var mustFinishBefore = {
-      '.skill-card': '#skills h2',
-      '.project-card': '.project-card.featured',
-      '.stat-card': '#about h2'
-    };
     var slides = [];
     var alternate = 0;
+
+    // O elemento tem de estar no sítio quando esta referência chega ao topo da página.
+    function limitFor(selector, el, index) {
+      if (selector === '.skill-card') return document.querySelector('#skills h2');
+      if (selector === '.project-card') return document.querySelector(index === 0 ? '#projects h2' : '.project-card.featured');
+      if (selector === '.about-text p' || selector === '.stat-card') return document.querySelector('#about h2');
+      return null;
+    }
 
     function pageTop(el) {
       var y = 0;
@@ -133,31 +134,38 @@
     }
 
     function drawSlide(item) {
-      if (item.t === item.drawn) return;
-      item.drawn = item.t;
-      if (item.t >= 1) {
+      var t = item.trigger ? item.trigger.progress : 0;
+      if (t === item.drawn) return;
+      item.drawn = t;
+      if (t >= 1) {
         item.el.style.transform = '';
         return;
       }
-      var rest = Math.pow(1 - item.t, 3);
+      var rest = (1 - t) * (1 - t);
       item.el.style.transform = 'translate3d(' + (item.side * item.distance * rest).toFixed(1) + 'px,0,0) rotate(' + (item.side * 7 * rest).toFixed(2) + 'deg)';
     }
 
     slideGroups.forEach(function (selector) {
       gsap.utils.toArray(selector).forEach(function (el, index) {
-        var item = { el: el, t: 0, fallbackSide: alternate++ % 2 === 0 ? -1 : 1, delay: (index % 4) * 0.1, wait: (index % 4) * 0.1 };
-        var limit = mustFinishBefore[selector] ? document.querySelector(mustFinishBefore[selector]) : null;
+        var item = { el: el, fallbackSide: alternate++ % 2 === 0 ? -1 : 1 };
+        var limit = limitFor(selector, el, index);
+        // Os cartões da mesma fila chegam um a seguir ao outro.
+        var stagger = selector === '.skill-card' ? (3 - index) * 24 : (selector === '.stat-card' ? (3 - index) * 16 : 0);
         measureSlide(item);
         item.trigger = ScrollTrigger.create({
           trigger: el,
-          start: 'top 92%',
+          // Começa antes de entrar no ecrã: assim a parte visível do percurso é mais lenta.
+          start: function () { return pageTop(el) - window.innerHeight * 1.25; },
           end: function () {
             var vh = window.innerHeight;
             var top = pageTop(el);
-            var start = top - vh * 0.92;
-            var end = top - vh * 0.72;
-            // Em ecrãs com uma só coluna, a referência pode estar muito acima do elemento.
-            if (limit && limit !== el && window.innerWidth > 900) end = Math.min(end, pageTop(limit) - NAV_CLEARANCE);
+            var start = top - vh * 1.25;
+            // Sem referência, ou numa só coluna, termina quando o elemento está bem visível.
+            var end = top - vh * 0.55;
+            if (limit && window.innerWidth > 900) {
+              // Mas nunca antes de o elemento estar dentro do ecrã.
+              end = Math.max(pageTop(limit) - NAV_CLEARANCE - stagger, top - vh * 0.85);
+            }
             return Math.max(start + 20, end);
           }
         });
@@ -166,21 +174,9 @@
       });
     });
 
-    // O tempo move o elemento devagar; o scroll garante que chega a tempo, mesmo a descer depressa.
-    gsap.ticker.add(function (time, deltaMs) {
-      var dt = Math.min(0.1, deltaMs / 1000);
-      slides.forEach(function (item) {
-        var scrolled = item.trigger.progress;
-        if (scrolled > 0) {
-          if (item.wait > 0) item.wait -= dt;
-          else item.t = Math.min(1, item.t + dt / SLIDE_SECONDS);
-        } else {
-          item.wait = item.delay;
-          item.t = Math.max(0, item.t - dt / SLIDE_SECONDS);
-        }
-        item.t = Math.max(item.t, scrolled);
-        drawSlide(item);
-      });
+    // O movimento segue apenas o scroll, incluindo o regresso ao subir.
+    gsap.ticker.add(function () {
+      slides.forEach(drawSlide);
     });
 
     ScrollTrigger.addEventListener('refresh', function () {
