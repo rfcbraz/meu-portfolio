@@ -106,22 +106,57 @@
   </div>
   <div class="skills-grid">
     <div class="skill-card">
-      <div class="skill-icon" aria-hidden="true">&lt;/&gt;</div>
+      <div class="demo demo-browser" aria-hidden="true">
+        <div class="demo-bar"><i></i><i></i><i></i><span>o-teu-site.pt</span></div>
+        <div class="demo-page">
+          <div class="b-nav"></div>
+          <div class="b-title"></div>
+          <div class="b-title b-short"></div>
+          <div class="b-button"></div>
+          <div class="b-cards"><span></span><span></span><span></span></div>
+          <div class="b-cursor"></div>
+        </div>
+      </div>
       <div class="skill-name" data-i18n="skillFrontend">Frontend</div>
       <div class="skill-desc" data-i18n="skillFrontendDesc">React, HTML/CSS, interfaces responsivas e acessíveis</div>
     </div>
     <div class="skill-card">
-      <div class="skill-icon" aria-hidden="true">{ }</div>
+      <div class="demo demo-terminal" aria-hidden="true">
+        <div class="demo-bar"><i></i><i></i><i></i><span>api.log</span></div>
+        <ol class="log" data-demo="log">
+          <li><span class="m">GET</span><span class="p">/quartos</span><span class="s">200</span><span class="t">12ms</span></li>
+          <li><span class="m">POST</span><span class="p">/auth/login</span><span class="s">200</span><span class="t">34ms</span></li>
+          <li><span class="m">POST</span><span class="p">/reservas</span><span class="s">201</span><span class="t">21ms</span></li>
+          <li><span class="m">GET</span><span class="p">/admin</span><span class="s bad">401</span><span class="t">5ms</span></li>
+        </ol>
+      </div>
       <div class="skill-name" data-i18n="skillBackend">Backend</div>
       <div class="skill-desc" data-i18n="skillBackendDesc">Node.js, REST APIs, autenticação e bases de dados</div>
     </div>
     <div class="skill-card">
-      <div class="skill-icon" aria-hidden="true">[ ]</div>
+      <div class="demo demo-mobile" aria-hidden="true">
+        <div class="phone" data-demo="phone" data-os="ios">
+          <div class="phone-notch"></div>
+          <div class="phone-progress"><span></span></div>
+          <div class="habit done"><i></i><b></b></div>
+          <div class="habit done"><i></i><b></b></div>
+          <div class="habit"><i></i><b></b></div>
+          <div class="os-label">iOS</div>
+        </div>
+      </div>
       <div class="skill-name" data-i18n="skillMobile">Mobile</div>
       <div class="skill-desc" data-i18n="skillMobileDesc">Flutter e React Native para iOS e Android</div>
     </div>
     <div class="skill-card">
-      <div class="skill-icon" aria-hidden="true">( )</div>
+      <div class="demo demo-table" aria-hidden="true">
+        <code class="query">SELECT nome, stock FROM queijos ORDER BY stock DESC;</code>
+        <div class="q-rows" data-demo="table">
+          <div class="q-row"><span class="q-name">Serra</span><span class="q-bar"></span><span class="q-value">92</span></div>
+          <div class="q-row"><span class="q-name">Azeitão</span><span class="q-bar"></span><span class="q-value">74</span></div>
+          <div class="q-row"><span class="q-name">S. Jorge</span><span class="q-bar"></span><span class="q-value">58</span></div>
+          <div class="q-row"><span class="q-name">Nisa</span><span class="q-bar"></span><span class="q-value">37</span></div>
+        </div>
+      </div>
       <div class="skill-name" data-i18n="skillDatabase">Base de dados</div>
       <div class="skill-desc" data-i18n="skillDatabaseDesc">PostgreSQL, MongoDB, modelação e otimização</div>
     </div>
@@ -282,5 +317,6 @@ Authorization: Bearer &lt;jwt&gt;</pre>
 <script src="/vendor/lenis.min.js" defer></script>
 <script src="/cheese.js" defer></script>
 <script src="/motion.js" defer></script>
+<script src="/skills.js" defer></script>
 </body>
 </html>

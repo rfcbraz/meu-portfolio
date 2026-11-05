@@ -8,6 +8,7 @@ Site estático de Filipe Braz, publicado em [www.rfcb.pt](https://www.rfcb.pt) a
 - `styles.css`: estilos
 - `script.js`: idioma, menu mobile, janela de contacto e envio do formulário
 - `motion.js`: scroll suave, animações, cores das secções e percurso do queijo
+- `skills.js`: demonstrações animadas dos cartões de competências
 - `cheese.js`: queijo 3D desenhado num shader WebGL, sem modelos nem texturas
 - `cheese.webp`: imagem do queijo, usada quando o WebGL não está disponível e na imagem de partilha
 - `vendor/`: GSAP, ScrollTrigger e Lenis, alojados no próprio site
