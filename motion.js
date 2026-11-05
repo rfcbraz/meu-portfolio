@@ -260,7 +260,22 @@
 
   var codeLayer = document.createElement('pre');
   codeLayer.className = 'hero-code';
-  codeLayer.textContent = new Array(5).join(CODE);
+  // Blocos desfasados lado a lado, para haver código em toda a largura da abertura.
+  var codeLines = CODE.split('\n');
+  var codeWidth = Math.max.apply(null, codeLines.map(function (line) { return line.length; })) + 4;
+  // Só o texto que cabe no maior tamanho possível: esta camada é redesenhada a cada frame.
+  var codeBlocks = Math.ceil(Math.max(window.screen.width, window.innerWidth) / (codeWidth * 7.6));
+  var codeRowCount = Math.ceil(Math.max(window.screen.height, hero.offsetHeight * 1.3) / 19);
+  var codeRows = [];
+  for (var row = 0; row < codeRowCount; row++) {
+    var codeRow = '';
+    for (var block = 0; block < codeBlocks; block++) {
+      var line = codeLines[(row + block * 7) % codeLines.length];
+      codeRow += line + new Array(codeWidth - line.length + 1).join(' ');
+    }
+    codeRows.push(codeRow);
+  }
+  codeLayer.textContent = codeRows.join('\n');
   reveal.appendChild(codeLayer);
 
   var clone = null;
