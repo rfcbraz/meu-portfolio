@@ -146,8 +146,11 @@ nav > * { pointer-events: auto; }
   border: 1px solid currentColor;
   font-size: 0.82rem; font-weight: 500;
 }
-.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--tomato); animation: blink 1.4s infinite; }
-@keyframes blink { 50% { opacity: 0.25; } }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 0 rgba(34,197,94,0.7); animation: blink 1.5s infinite; }
+@keyframes blink {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34,197,94,0.7); }
+  50% { opacity: 0.3; box-shadow: 0 0 8px 2px rgba(34,197,94,0.4); }
+}
 .hero h1 {
   font-family: var(--display); font-weight: 800; font-stretch: 75%;
   font-size: clamp(5.4rem, min(25.5vw, 34vh), 27rem);
@@ -196,7 +199,7 @@ html.motion .hero-reveal { display: block; }
 }
 .is-clone .hero-sub, .is-clone .hero-sub strong, .is-clone .hero-hint { color: var(--ink); }
 .is-clone .hero-line2 { color: var(--ink); }
-.is-clone .dot { background: var(--ink); }
+.is-clone .dot { background: #0b7a34; box-shadow: none; }
 
 .cheese-spot { display: block; }
 .cheese-spot-hero {
