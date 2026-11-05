@@ -19,541 +19,38 @@
   <meta name="twitter:description" content="Transformo ideias em produtos digitais funcionais. Desenvolvedor Fullstack especialista em React, Node.js e Flutter, focado em criar aplicações web e mobile eficientes.">
   <meta name="twitter:image" content="https://www.rfcb.pt/og-image.png">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='8' fill='%2322c55e'/></svg>" type="image/svg+xml">
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-
-    :root {
-      --bg: #0a0a0f;
-      --surface: #13131a;
-      --border: rgba(255,255,255,0.08);
-      --accent: #7c5cfc;
-      --accent2: #c084fc;
-      --text: #f0eeff;
-      --muted: #8b85a0;
-      --tag-bg: rgba(124,92,252,0.12);
-      --tag-border: rgba(124,92,252,0.3);
-    }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* NAV */
-    nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.5rem 3rem;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      background: rgba(10,10,15,0.85);
-      backdrop-filter: blur(12px);
-      z-index: 100;
-    }
-
-    .logo {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 1.2rem;
-      letter-spacing: -0.02em;
-      color: var(--accent2);
-      text-decoration: none;
-    }
-    .logo span { color: var(--accent); }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 400;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--text); }
-
-    .nav-cta {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      padding: 0.55rem 1.3rem;
-      border-radius: 100px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.875rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
-    .nav-cta:hover { opacity: 0.85; }
-
-    .lang-switcher {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      margin-right: 1rem;
-    }
-    .lang-switcher button {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.12);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.8rem;
-      padding: 0.45rem 0.65rem;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s, border-color 0.2s;
-    }
-    .lang-switcher button:hover,
-    .lang-switcher button.active {
-      background: var(--accent);
-      border-color: rgba(124,92,252,0.6);
-      color: #fff;
-    }
-    .lang-switcher button:focus {
-      outline: 2px solid rgba(255,255,255,0.4);
-      outline-offset: 2px;
-    }
-
-    /* HERO */
-    .hero {
-      padding: 6rem 3rem 4rem;
-      max-width: 860px;
-      margin: 0 auto;
-      position: relative;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--tag-bg);
-      border: 1px solid var(--tag-border);
-      border-radius: 100px;
-      padding: 0.35rem 1rem;
-      font-size: 0.8rem;
-      color: var(--accent2);
-      margin-bottom: 2rem;
-    }
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #22c55e;
-      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
-      animation: blink 1.5s infinite;
-    }
-    @keyframes blink {
-      0%, 100% {
-        opacity: 1;
-        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
-      }
-      50% {
-        opacity: 0.3;
-        box-shadow: 0 0 8px 2px rgba(34, 197, 94, 0.4);
-      }
-    }
-
-    h1 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(3rem, 8vw, 5.5rem);
-      font-weight: 800;
-      line-height: 1.0;
-      letter-spacing: -0.04em;
-      margin-bottom: 1.5rem;
-    }
-    h1 .line2 {
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-sub {
-      font-size: 1.1rem;
-      color: var(--muted);
-      max-width: 520px;
-      line-height: 1.7;
-      margin-bottom: 2.5rem;
-      font-weight: 300;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      padding: 0.85rem 2rem;
-      border-radius: 100px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: opacity 0.2s, transform 0.15s;
-    }
-    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
-    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--border);
-      padding: 0.85rem 2rem;
-      border-radius: 100px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1rem;
-      font-weight: 400;
-      cursor: pointer;
-      transition: border-color 0.2s, transform 0.15s;
-    }
-    .btn-ghost:hover { border-color: rgba(255,255,255,0.25); transform: translateY(-1px); }
-
-    /* SCROLL TICKER */
-    .ticker {
-      overflow: hidden;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 1rem 0;
-      margin: 2rem 0;
-    }
-    .ticker-inner {
-      display: flex;
-      gap: 3rem;
-      animation: ticker 18s linear infinite;
-      width: max-content;
-    }
-    @keyframes ticker {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
-    .ticker-item {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-    .ticker-item span { color: var(--accent); margin-right: 3rem; }
-
-    /* SECTION */
-    section {
-      padding: 4rem 3rem;
-      max-width: 860px;
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1rem;
-    }
-
-    h2 {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(1.8rem, 4vw, 2.5rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      margin-bottom: 2.5rem;
-      line-height: 1.1;
-    }
-
-    /* SKILLS GRID */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1px;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-    }
-
-    .skill-card {
-      background: var(--surface);
-      padding: 1.5rem;
-      transition: background 0.2s;
-    }
-    .skill-card:hover { background: rgba(124,92,252,0.08); }
-
-    .skill-icon {
-      font-size: 1.6rem;
-      margin-bottom: 0.75rem;
-    }
-    .skill-name {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 0.95rem;
-      margin-bottom: 0.3rem;
-    }
-    .skill-desc {
-      font-size: 0.8rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    /* PROJECTS */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    .project-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 1.5rem;
-      transition: border-color 0.2s, transform 0.2s;
-      cursor: pointer;
-      position: relative; /* Crucial para o stretched-link funcionar nos cartões */
-    }
-    .project-card:hover {
-      border-color: rgba(124,92,252,0.4);
-      transform: translateY(-3px);
-    }
-    .project-card.featured {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      align-items: center;
-    }
-
-    /* Classe do link invisível que cobre o cartão sem partir o layout */
-    .stretched-link::after {
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      z-index: 1;
-      content: "";
-      background-color: rgba(0, 0, 0, 0);
-    }
-
-    .project-visual {
-      height: 140px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3rem;
-    }
-    .project-visual.web { background: linear-gradient(135deg, rgba(124,92,252,0.2), rgba(192,132,252,0.15)); }
-    .project-visual.mobile { background: linear-gradient(135deg, rgba(74,222,128,0.15), rgba(124,92,252,0.1)); }
-    .project-visual.api { background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(124,92,252,0.1)); }
-
-    .project-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin: 0.75rem 0;
-    }
-    .tag {
-      background: var(--tag-bg);
-      border: 1px solid var(--tag-border);
-      color: var(--accent2);
-      font-size: 0.72rem;
-      padding: 0.2rem 0.6rem;
-      border-radius: 100px;
-    }
-    .project-title {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 1.05rem;
-      margin-bottom: 0.4rem;
-    }
-    .project-desc {
-      font-size: 0.85rem;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    /* ABOUT */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      align-items: start;
-    }
-    .about-text p {
-      color: var(--muted);
-      font-size: 0.95rem;
-      line-height: 1.8;
-      font-weight: 300;
-      margin-bottom: 1rem;
-    }
-    .about-text p strong { color: var(--text); font-weight: 500; }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-    .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.2rem;
-      text-align: center;
-    }
-    .stat-num {
-      font-family: 'Syne', sans-serif;
-      font-size: 2rem;
-      font-weight: 800;
-      color: var(--accent2);
-    }
-    .stat-label {
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin-top: 0.2rem;
-    }
-
-    /* CONTACT */
-    .contact-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 3rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .contact-box::before {
-      content: '';
-      position: absolute;
-      top: -60px; left: 50%;
-      transform: translateX(-50%);
-      width: 300px; height: 300px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(124,92,252,0.15), transparent 70%);
-      pointer-events: none;
-    }
-    .contact-box h2 { margin-bottom: 0.75rem; }
-    .contact-box p {
-      color: var(--muted);
-      margin-bottom: 2rem;
-      font-size: 0.95rem;
-      font-weight: 300;
-    }
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .contact-link {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      padding: 0.65rem 1.4rem;
-      color: var(--text);
-      text-decoration: none;
-      font-size: 0.875rem;
-      transition: border-color 0.2s, background 0.2s;
-    }
-    .contact-link:hover {
-      border-color: rgba(124,92,252,0.5);
-      background: rgba(124,92,252,0.08);
-    }
-
-    /* FOOTER */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2rem 3rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: var(--muted);
-      font-size: 0.8rem;
-    }
-    /* RESPONSIVE ADJUSTMENTS */
-    .nav-toggle { display: none; background: transparent; border: none; cursor: pointer; }
-    .nav-toggle .hamburger {
-      width: 22px; height: 2px; background: var(--text); display: block; position: relative;
-    }
-    .nav-toggle .hamburger::before, .nav-toggle .hamburger::after {
-      content: '';
-      position: absolute;
-      left: 0; width: 22px; height: 2px; background: var(--text);
-    }
-    .nav-toggle .hamburger::before { top: -7px; }
-    .nav-toggle .hamburger::after { top: 7px; }
-
-    @media (max-width: 860px) {
-      nav { padding: 1rem 1rem; }
-      .logo { font-size: 1rem; }
-      .nav-links { display: none; position: absolute; top: 64px; right: 1rem; background: rgba(10,10,15,0.96); border: 1px solid var(--border); padding: 1rem 1.25rem; border-radius: 12px; flex-direction: column; gap: 0.5rem; }
-      .nav-links li { margin: 0; }
-      .nav-cta { display: none; }
-      .nav-toggle { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 8px; }
-      .hero { padding: 4rem 1rem 2.5rem; }
-      section { padding: 2.5rem 1rem; }
-      .skills-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
-      .projects-grid { grid-template-columns: 1fr; }
-      .project-card.featured { grid-template-columns: 1fr; }
-      .about-grid { grid-template-columns: 1fr; }
-      .stats-grid { grid-template-columns: 1fr 1fr; }
-      .ticker-inner { gap: 1.5rem; }
-    }
-
-    /* When nav is open */
-    .nav-open .nav-links { display: flex; }
-
-    /* Smooth scroll */
-    html { scroll-behavior: smooth; }
-
-    /* Modal / Contact popup */
-    .modal { display: none; position: fixed; inset: 0; z-index: 200; }
-    .modal.show { display: block; }
-    .modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.6); }
-    .modal-content { position: relative; width: min(720px, 92%); margin: 6vh auto; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; z-index: 2; color: var(--text); }
-    .modal-close { position: absolute; right: 0.6rem; top: 0.4rem; background: transparent; border: none; color: var(--muted); font-size: 1.25rem; cursor: pointer; }
-    .modal-content form input, .modal-content form textarea { width: 100%; padding: 0.6rem 0.75rem; margin: 0.5rem 0; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--text); }
-    .modal-content form textarea { min-height: 120px; resize: vertical; }
-  </style>
+  <link rel="preload" href="/fonts/syne-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/dm-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/fonts/fonts.css">
+  <link rel="canonical" href="https://www.rfcb.pt/">
+  <link rel="alternate" hreflang="pt" href="https://www.rfcb.pt/">
+  <link rel="alternate" hreflang="en" href="https://www.rfcb.pt/?lang=en">
+  <link rel="alternate" hreflang="de" href="https://www.rfcb.pt/?lang=de">
+  <link rel="alternate" hreflang="es" href="https://www.rfcb.pt/?lang=es">
+  <link rel="alternate" hreflang="x-default" href="https://www.rfcb.pt/">
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body id="top">
+<a class="skip-link" href="#conteudo-principal" data-i18n="skipLink">Saltar para o conteúdo</a>
 
 <nav>
   <a class="logo" href="#top">Filipe Braz</a>
-  <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
+  <button type="button" class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links">
     <span class="hamburger"></span>
   </button>
-  <ul class="nav-links" role="menu">
+  <ul class="nav-links" id="nav-links">
     <li><a href="#skills" data-i18n="navSkills">Skills</a></li>
     <li><a href="#projects" data-i18n="navProjects">Projetos</a></li>
     <li><a href="#about" data-i18n="navAbout">Sobre</a></li>
+    <li class="nav-contact"><a class="email-trigger" href="#contact" data-i18n="contactButton">Contactar</a></li>
   </ul>
-  <div class="lang-switcher" role="group" aria-label="Mudar idioma">
+  <div class="lang-switcher" role="group" aria-label="Mudar idioma" data-i18n-aria-label="navLanguage">
     <button type="button" class="lang-btn active" data-lang="pt">PT</button>
     <button type="button" class="lang-btn" data-lang="en">EN</button>
     <button type="button" class="lang-btn" data-lang="de">DE</button>
     <button type="button" class="lang-btn" data-lang="es">ES</button>
   </div>
-  <button class="nav-cta" id="contact-btn" data-i18n="contactButton">Contactar</button>
+  <button type="button" class="nav-cta" id="contact-btn" data-i18n="contactButton">Contactar</button>
 </nav>
 <main id="conteudo-principal">
 <div class="hero">
@@ -562,16 +59,16 @@
     Filipe<br>
     <span class="line2">Braz.</span>
   </h1>
-  <p class="hero-sub" data-i18n="heroSubtitle">
-     A finalizar a licenciatura em Informática, especializado em <strong style="color:var(--text)">desenvolvimento web, fullstack</strong> e <strong style="color:var(--text)">aplicações mobile</strong>. Transformo ideias em produtos digitais que funcionam.
+  <p class="hero-sub" data-i18n-html="heroSubtitle">
+     A finalizar a licenciatura em Informática, especializado em <strong>desenvolvimento web, fullstack</strong> e <strong>aplicações mobile</strong>. Transformo ideias em produtos digitais que funcionam.
   </p>
   <div class="hero-actions">
     <a class="btn-primary" href="#projects" data-i18n="heroProjects">Ver projetos</a>
-    <button class="btn-ghost" data-i18n="heroDownloadCV">Download CV</button>
+    <a class="btn-ghost" href="/cv.pdf" download hidden data-i18n="heroDownloadCV">Download CV</a>
   </div>
 </div>
 
-<div class="ticker">
+<div class="ticker" aria-hidden="true">
   <div class="ticker-inner">
     <span class="ticker-item">React <span>✦</span></span>
     <span class="ticker-item">Node.js <span>✦</span></span>
@@ -597,22 +94,22 @@
   <h2 data-i18n="skillsTitle">Skills & especialidades</h2>
   <div class="skills-grid">
     <div class="skill-card">
-      <div class="skill-icon">🌐</div>
+      <div class="skill-icon" aria-hidden="true">🌐</div>
       <div class="skill-name" data-i18n="skillFrontend">Frontend</div>
       <div class="skill-desc" data-i18n="skillFrontendDesc">React, HTML/CSS, interfaces responsivas e acessíveis</div>
     </div>
     <div class="skill-card">
-      <div class="skill-icon">⚙️</div>
+      <div class="skill-icon" aria-hidden="true">⚙️</div>
       <div class="skill-name" data-i18n="skillBackend">Backend</div>
       <div class="skill-desc" data-i18n="skillBackendDesc">Node.js, REST APIs, autenticação e bases de dados</div>
     </div>
     <div class="skill-card">
-      <div class="skill-icon">📱</div>
+      <div class="skill-icon" aria-hidden="true">📱</div>
       <div class="skill-name" data-i18n="skillMobile">Mobile</div>
       <div class="skill-desc" data-i18n="skillMobileDesc">Flutter e React Native para iOS e Android</div>
     </div>
     <div class="skill-card">
-      <div class="skill-icon">🗄️</div>
+      <div class="skill-icon" aria-hidden="true">🗄️</div>
       <div class="skill-name" data-i18n="skillDatabase">Base de dados</div>
       <div class="skill-desc" data-i18n="skillDatabaseDesc">PostgreSQL, MongoDB, modelação e otimização</div>
     </div>
@@ -623,8 +120,8 @@
   <div class="section-label" data-i18n="projectsLabel">Portfolio</div>
   <h2 data-i18n="projectsTitle">Projetos em destaque</h2>
   <div class="projects-grid">
-    <div class="project-card featured">
-      <div class="project-visual web" style="height:180px; font-size:4rem;">🏔️🏡</div>
+    <div class="project-card featured has-link">
+      <div class="project-visual web featured-visual" aria-hidden="true">🏔️🏡</div>
       <div>
         <div class="project-tags">
           <span class="tag">JavaScript</span>
@@ -634,13 +131,13 @@
           <span class="tag">Prisma</span>
           <span class="tag">Stripe</span>
         </div>
-        <a href="https://casadaserra.netlify.app" target="_blank" rel="noopener noreferrer" class="stretched-link"></a>
-        <div class="project-title" data-i18n="projectEcommerceTitle">Plataforma de reservas Alojamento Local</div>
-        <p class="project-desc" data-i18n="projectEcommerceDesc">Website de consulta e reserva de quartos, pagamentos e painel de gestão para o vendedor. Desenvolvida do zero com foco em performance e UX.</p>
+        <a href="https://casadaserra.netlify.app" target="_blank" rel="noopener noreferrer" class="stretched-link" aria-labelledby="project-casadaserra-title"></a>
+        <div class="project-title" id="project-casadaserra-title" data-i18n="projectEcommerceTitle">Website de Alojamento Local - Plataforma de reservas</div>
+        <p class="project-desc" data-i18n="projectEcommerceDesc">Website para consulta e reserva de quartos, pagamentos e painel de gestão para o vendedor. Desenvolvida do zero com foco em performance e UX.</p>
       </div>
     </div>
     <div class="project-card">
-      <div class="project-visual mobile">📲</div>
+      <div class="project-visual mobile" aria-hidden="true">📲</div>
       <div class="project-tags">
         <span class="tag">Flutter</span>
         <span class="tag">Firebase</span>
@@ -649,7 +146,7 @@
       <p class="project-desc" data-i18n="projectHabitsDesc">Aplicação mobile para tracking de hábitos com notificações e estatísticas.</p>
     </div>
     <div class="project-card">
-      <div class="project-visual api">🔌</div>
+      <div class="project-visual api" aria-hidden="true">🔌</div>
       <div class="project-tags">
         <span class="tag">Node.js</span>
         <span class="tag">REST API</span>
@@ -665,7 +162,7 @@
   <h2 data-i18n="aboutTitle">Quem sou</h2>
   <div class="about-grid">
     <div class="about-text">
-      <p data-i18n="aboutPara1">Sou <strong>Filipe Braz</strong>, a finalizar a licenciatura em Informática e apaixonado por criar produtos digitais de raiz — desde a interface até ao servidor.</p>
+      <p data-i18n-html="aboutPara1">Sou <strong>Filipe Braz</strong>, a finalizar a licenciatura em Informática e apaixonado por criar produtos digitais de raiz — desde a interface até ao servidor.</p>
       <p data-i18n="aboutPara2">Tenho experiência tanto em web, fullstack como em desenvolvimento mobile, o que me permite entregar soluções completas sem depender de terceiros.</p>
       <p data-i18n="aboutPara3">Procuro projetos freelance onde possa criar valor real para negócios e pessoas reais.</p>
     </div>
@@ -692,11 +189,11 @@
 
 <section id="contact">
   <div class="contact-box">
-    <div class="section-label" style="text-align:center" data-i18n="contactLabel">Vamos trabalhar juntos</div>
+    <div class="section-label centered" data-i18n="contactLabel">Vamos trabalhar juntos</div>
     <h2 data-i18n="contactTitle">Tens um projeto em mente?</h2>
     <p data-i18n="contactText">Estou disponível para projetos freelance — web, mobile ou fullstack. Fala comigo sem compromisso.</p>
     <div class="contact-links">
-      <a class="contact-link email-trigger" href="#">✉ filipebraz@rfcb.pt</a>
+      <a class="contact-link email-trigger" href="#contact">✉ filipebraz@rfcb.pt</a>
       <a class="contact-link" href="https://www.linkedin.com/in/rfcb/" data-i18n="contactLinkedIn" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a>
       <a class="contact-link" href="https://github.com/rfcbraz/" data-i18n="contactGitHub" target="_blank" rel="noopener noreferrer">🐙 GitHub</a>
     </div>
@@ -709,407 +206,39 @@
 </footer>
 
 <div id="contact-modal" class="modal" aria-hidden="true">
-  <div class="modal-backdrop" data-close></div>
+  <div class="modal-backdrop"></div>
   <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
-    <button class="modal-close" aria-label="Fechar">×</button>
+    <button type="button" class="modal-close" aria-label="Fechar" data-i18n-aria-label="modalClose">×</button>
     <h2 id="contact-modal-title" data-i18n="modalTitle">Contactar</h2>
     
-    <form id="contact-form" autocomplete="off">
-  <input type="hidden" name="access_key" value="248e71dc-0ba1-4ef5-9f31-704a2841c40b">
-  <input type="hidden" name="subject" value="Novo contacto — Portfólio Filipe Braz">
-  
-  <div style="display: none;" aria-hidden="true">
-    <input type="text" name="_gotcha" id="honeypot-field" tabindex="-1" autocomplete="off">
-  </div>
-  
-  <label for="name" class="sr-only">Nome</label>
-  <input id="name" name="name" placeholder="Nome completo" data-i18n-placeholder="placeholderName" required>
-  
-  <label for="email" class="sr-only">Email</label>
-  <input id="email" type="email" name="email" placeholder="Email" data-i18n-placeholder="placeholderContact" required>
-  
-  <label for="subject-input" class="sr-only">Assunto</label>
-  <input id="subject-input" name="subject" placeholder="Assunto" data-i18n-placeholder="placeholderSubject" required>
-  
-  <label for="message" class="sr-only">Mensagem</label>
-  <textarea id="message" name="message" placeholder="Mensagem" data-i18n-placeholder="placeholderMessage" required></textarea>
-  
-  <div style="display:flex; gap:0.5rem; justify-content:flex-end; margin-top:0.5rem;">
-    <button type="submit" class="btn-primary" data-i18n="modalSend">Enviar</button>
-    <button type="button" class="btn-ghost modal-close" data-i18n="modalClose">Fechar</button>
-  </div>
-</form>
+    <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="248e71dc-0ba1-4ef5-9f31-704a2841c40b">
+
+      <label for="name" class="sr-only">Nome</label>
+      <input id="name" name="name" autocomplete="name" maxlength="100" placeholder="Nome completo" data-i18n-placeholder="placeholderName" required>
+
+      <label for="email" class="sr-only">Email</label>
+      <input id="email" type="email" name="email" autocomplete="email" maxlength="254" placeholder="Email" data-i18n-placeholder="placeholderContact" required>
+
+      <label for="subject-input" class="sr-only">Assunto</label>
+      <input id="subject-input" name="subject" autocomplete="off" maxlength="150" placeholder="Assunto" data-i18n-placeholder="placeholderSubject" required>
+
+      <label for="message" class="sr-only">Mensagem</label>
+      <textarea id="message" name="message" maxlength="5000" placeholder="Mensagem" data-i18n-placeholder="placeholderMessage" required></textarea>
+
+      <p class="form-privacy" data-i18n="formPrivacy">Este formulário usa o hCaptcha para proteção contra spam. Os teus dados são enviados através do serviço Web3Forms e usados apenas para responder ao teu contacto.</p>
+      <div class="form-captcha" id="form-captcha"></div>
+      <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">Enviar</button>
+        <button type="button" class="btn-ghost modal-close" data-i18n="modalClose">Fechar</button>
+      </div>
+    </form>
   </div>
 </div>
 
-<script>
-  (function(){
-    var contactBtn = document.getElementById('contact-btn');
-    var emailTriggers = document.querySelectorAll('.email-trigger');
-    var modal = document.getElementById('contact-modal');
-    if(!modal) return;
-    var modalCloseButtons = modal.querySelectorAll('.modal-close');
-    var backdrop = modal.querySelector('.modal-backdrop');
-    var form = modal.querySelector('#contact-form');
-
-    function openModal(){
-      modal.classList.add('show');
-      modal.setAttribute('aria-hidden','false');
-      var nameInput = modal.querySelector('input[name="name"]');
-      if(nameInput) nameInput.focus();
-    }
-    function closeModal(){
-      modal.classList.remove('show');
-      modal.setAttribute('aria-hidden','true');
-    }
-
-    if(contactBtn) contactBtn.addEventListener('click', function(e){ e.preventDefault(); openModal(); });
-
-    emailTriggers.forEach(function(el){
-      el.addEventListener('click', function(e){ e.preventDefault(); openModal(); });
-    });
-
-    modalCloseButtons.forEach(function(b){ b.addEventListener('click', closeModal); });
-    if(backdrop) backdrop.addEventListener('click', closeModal);
-
-    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
-
-    // Função utilitária para evitar injeção de HTML/Scripts (XSS)
-    function sanitizeInput(str) {
-      if (typeof str !== 'string') return str;
-      return str
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#x27;");
-    }
-
-    if(form){
-      form.addEventListener('submit', async function(e){
-        e.preventDefault();
-
-        // VERIFICAÇÃO DO HONEYPOT (ANTI-SPAM)
-        var honeypot = document.getElementById('honeypot-field')?.value;
-        if (honeypot && honeypot.trim() !== "") {
-          console.warn("Spam bot detectado e bloqueado.");
-          form.reset();
-          setTimeout(closeModal, 500);
-          return;
-        }
-
-        var submitBtn = form.querySelector('button[type="submit"]');
-        submitBtn.disabled = true;
-        submitBtn.innerText = 'A enviar...';
-
-        try {
-          const rawData = Object.fromEntries(new FormData(form));
-          
-          // SANITIZAÇÃO DOS DADOS (XSS)
-          const sanitizedData = {};
-          for (const key in rawData) {
-            sanitizedData[key] = sanitizeInput(rawData[key]);
-          }
-
-          const res = await fetch('https://api.web3forms.com/submit', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-            body: JSON.stringify(sanitizedData)
-          });
-          const json = await res.json();
-
-          if(json.success){
-            submitBtn.innerText = '✓ Enviado!';
-            form.reset();
-            setTimeout(closeModal, 1500);
-          } else {
-            throw new Error(json.message || 'Erro desconhecido');
-          }
-        } catch(err) {
-          submitBtn.disabled = false;
-          submitBtn.innerText = 'Enviar';
-          alert('Erro ao enviar. Tenta novamente.');
-        }
-      });
-    }
-  })();
-</script>
-
-<script>
-(function(){
-  var translations = {
-    pt: {
-      navSkills: 'Skills',
-      navProjects: 'Projetos',
-      navAbout: 'Sobre',
-      contactButton: 'Contactar',
-      heroBadge: 'Disponível para projetos freelance',
-      heroSubtitle: 'A finalizar a licenciatura em Informática, especializado em desenvolvimento web, fullstack e aplicações mobile. Transformo ideias em produtos digitais que funcionam.',
-      heroProjects: 'Ver projetos',
-      heroDownloadCV: 'Download CV',
-      skillsLabel: 'O que faço',
-      skillsTitle: 'Skills & especialidades',
-      skillFrontend: 'Frontend',
-      skillFrontendDesc: 'React, HTML/CSS, interfaces responsivas e acessíveis',
-      skillBackend: 'Backend',
-      skillBackendDesc: 'Node.js, REST APIs, autenticação e bases de dados',
-      skillMobile: 'Mobile',
-      skillMobileDesc: 'Flutter e React Native para iOS e Android',
-      skillDatabase: 'Base de dados',
-      skillDatabaseDesc: 'PostgreSQL, MongoDB, modelação e otimização',
-      projectsLabel: 'Portfolio',
-      projectsTitle: 'Projetos em destaque',
-      projectEcommerceTitle: 'Website de Alojamento Local - Plataforma de reservas ',
-      projectEcommerceDesc: 'Website para consulta e reserva de quartos, pagamentos e painel de gestão para o vendedor. Desenvolvida do zero com foco em performance e UX.',
-
-      //Todo rever as traduções destes títulos e descrições para português, para garantir que soam naturais e profissionais, sem traduções literais ou termos estranhos.
-      
-      projectHabitsTitle: 'App de Hábitos',
-      projectHabitsDesc: 'Aplicação mobile para tracking de hábitos com notificações e estatísticas.',
-      projectApiTitle: 'API de Gestão',
-      projectApiDesc: 'API RESTful com autenticação JWT para sistema de gestão de clientes.',
-      aboutLabel: 'Sobre mim',
-      aboutTitle: 'Quem sou',
-      aboutPara1: 'Sou Filipe Braz, a finalizar a licenciatura em Informática e apaixonado por criar produtos digitais de raiz — desde a interface até ao servidor.',
-      aboutPara2: 'Tenho experiência tanto em web, fullstack como em desenvolvimento mobile, o que me permite entregar soluções completas sem depender de terceiros.',
-      aboutPara3: 'Procuro projetos freelance onde possa criar valor real para negócios e pessoas reais.',
-      statExperience: 'anos de experiência',
-      statProjects: 'projetos concluídos',
-      statPlatforms: 'plataformas mobile',
-      statCheese: 'queijo consumido',
-      contactLabel: 'Vamos trabalhar juntos',
-      contactTitle: 'Tens um projeto em mente?',
-      contactText: 'Estou disponível para projetos freelance — web, mobile ou fullstack. Fala comigo sem compromisso.',
-      contactLinkedIn: '💼 LinkedIn',
-      contactGitHub: '🐙 GitHub',
-      footerCopyright: '© 2026 Filipe Braz - rfcb solutions',
-      footerMadeWith: 'Feito com código & queijo 🧀',
-      modalTitle: 'Contactar',
-      placeholderName: 'Nome completo',
-      placeholderContact: 'Email',
-      placeholderSubject: 'Assunto',
-      placeholderMessage: 'Mensagem',
-      modalSend: 'Enviar',
-      modalClose: 'Fechar',
-      formFillAll: 'Por favor preencha todos os campos antes de enviar.'
-    },
-    en: {
-      navSkills: 'Skills',
-      navProjects: 'Projects',
-      navAbout: 'About',
-      contactButton: 'Contact',
-      heroBadge: 'Available for freelance projects',
-      heroSubtitle: 'Finishing a degree in Computer Science, specialized in fullstack web development and mobile apps. I turn ideas into digital products that work.',
-      heroProjects: 'See projects',
-      heroDownloadCV: 'Download CV',
-      skillsLabel: 'What I do',
-      skillsTitle: 'Skills & specialties',
-      skillFrontend: 'Frontend',
-      skillFrontendDesc: 'React, HTML/CSS, responsive and accessible interfaces',
-      skillBackend: 'Backend',
-      skillBackendDesc: 'Node.js, REST APIs, authentication and databases',
-      skillMobile: 'Mobile',
-      skillMobileDesc: 'Flutter and React Native for iOS and Android',
-      skillDatabase: 'Database',
-      skillDatabaseDesc: 'PostgreSQL, MongoDB, modeling and optimization',
-      projectsLabel: 'Portfolio',
-      projectsTitle: 'Featured projects',
-      projectEcommerceTitle: 'Local Accommodation Booking Platform',
-      projectEcommerceDesc: 'Website for room browsing and booking, payments, and a management dashboard for the vendor. Developed from scratch with a focus on performance and UX.',
-      projectHabitsTitle: 'Habits App',
-      projectHabitsDesc: 'Mobile app for habit tracking with notifications and statistics.',
-      projectApiTitle: 'Management API',
-      projectApiDesc: 'RESTful API with JWT authentication for client management systems.',
-      aboutLabel: 'About me',
-      aboutTitle: 'Who I am',
-      aboutPara1: 'I am Filipe Braz, finishing a degree in Computer Science and passionate about creating digital products from scratch — from interface to server.',
-      aboutPara2: 'I have experience in both fullstack web and mobile development, allowing me to deliver complete solutions without relying on third parties.',
-      aboutPara3: 'I am looking for freelance projects where I can create real value for businesses and people.',
-      statExperience: 'years of experience',
-      statProjects: 'projects completed',
-      statPlatforms: 'mobile platforms',
-      statCheese: 'cheese consumed',
-      contactLabel: 'Let’s work together',
-      contactTitle: 'Got a project in mind?',
-      contactText: 'I am available for freelance work — web, mobile or fullstack. Talk to me with no obligation.',
-      contactLinkedIn: '💼 LinkedIn',
-      contactGitHub: '🐙 GitHub',
-      footerCopyright: '© 2026 Filipe Braz - rfcb solutions',
-      footerMadeWith: 'Made with code & cheese 🧀',
-      modalTitle: 'Contact',
-      placeholderName: 'Full name',
-      placeholderContact: 'Email',
-      placeholderSubject: 'Subject',
-      placeholderMessage: 'Message',
-      modalSend: 'Send',
-      modalClose: 'Close',
-      formFillAll: 'Please fill in all fields before sending.'
-    },
-    de: {
-      navSkills: 'Skills',
-      navProjects: 'Projekte',
-      navAbout: 'Über mich',
-      contactButton: 'Kontakt',
-      heroBadge: 'Verfügbar für Freelance-Projekte',
-      heroSubtitle: 'Informatikstudent im Abschluss, spezialisiert auf Fullstack-Webentwicklung und Mobile Apps. Ich verwandle Ideen in digitale Produkte.',
-      heroProjects: 'Projekte ansehen',
-      heroDownloadCV: 'Lebenslauf herunterladen',
-      skillsLabel: 'Was ich tue',
-      skillsTitle: 'Skills & Schwerpunkte',
-      skillFrontend: 'Frontend',
-      skillFrontendDesc: 'React, HTML/CSS, responsive und barrierefreie Interfaces',
-      skillBackend: 'Backend',
-      skillBackendDesc: 'Node.js, REST APIs, Authentifizierung und Datenbanken',
-      skillMobile: 'Mobile',
-      skillMobileDesc: 'Flutter und React Native für iOS und Android',
-      skillDatabase: 'Datenbank',
-      skillDatabaseDesc: 'PostgreSQL, MongoDB, Modellierung und Optimierung',
-      projectsLabel: 'Portfolio',
-      projectsTitle: 'Ausgewählte Projekte',
-      projectEcommerceTitle: 'Buchungsplattform für Ferienunterkünfte',
-      projectEcommerceDesc: 'Website für die Zimmer- und Buchungsverwaltung, Zahlungen und ein Dashboard für den Vermieter. Von Grund auf neu entwickelt, mit Fokus auf Performance und UX.',
-      projectHabitsTitle: 'Gewohnheits-App',
-      projectHabitsDesc: 'Mobile App zur Gewohnheitsverfolgung mit Benachrichtigungen und Statistiken.',
-      projectApiTitle: 'Management-API',
-      projectApiDesc: 'RESTful API mit JWT-Authentifizierung für Kundenverwaltungssysteme.',
-      aboutLabel: 'Über mich',
-      aboutTitle: 'Wer bin ich',
-      aboutPara1: 'Ich bin Filipe Braz, kurz vor dem Abschluss meines Informatikstudiums und leidenschaftlich daran interessiert, digitale Produkte von Grund auf zu entwickeln.',
-      aboutPara2: 'Ich habe Erfahrung sowohl in der Fullstack-Web- als auch in der Mobile-Entwicklung und kann so vollständige Lösungen ohne Dritte liefern.',
-      aboutPara3: 'Ich suche Freelance-Projekte, bei denen ich echten Mehrwert für Unternehmen und Menschen schaffen kann.',
-      statExperience: 'Jahre Erfahrung',
-      statProjects: 'abgeschlossene Projekte',
-      statPlatforms: 'Mobile-Plattformen',
-      statCheese: 'Käse konsumiert',
-      contactLabel: 'Lass uns zusammenarbeiten',
-      contactTitle: 'Hast du ein Projekt im Sinn?',
-      contactText: 'Ich bin für Freelance-Arbeit verfügbar — Web, Mobile oder Fullstack. Kontaktiere mich unverbindlich.',
-      contactLinkedIn: '💼 LinkedIn',
-      contactGitHub: '🐙 GitHub',
-      footerCopyright: '© 2026 Filipe Braz - rfcb solutions',
-      footerMadeWith: 'Mit Code & Käse gemacht 🧀',
-      modalTitle: 'Kontakt',
-      placeholderName: 'Vollständiger Name',
-      placeholderContact: 'E-Mail',
-      placeholderSubject: 'Betreff',
-      placeholderMessage: 'Nachricht',
-      modalSend: 'Senden',
-      modalClose: 'Schließen',
-      formFillAll: 'Bitte füllen Sie alle Felder aus, bevor Sie absenden.'
-    },
-    es: {
-      navSkills: 'Skills',
-      navProjects: 'Proyectos',
-      navAbout: 'Sobre mí',
-      contactButton: 'Contactar',
-      heroBadge: 'Disponible para proyectos freelance',
-      heroSubtitle: 'Finalizando la licenciatura en Informática, especializado en desarrollo web fullstack y apps móviles. Convierto ideas en productos digitales que funcionan.',
-      heroProjects: 'Ver proyectos',
-      heroDownloadCV: 'Descargar CV',
-      skillsLabel: 'Lo que hago',
-      skillsTitle: 'Skills & especialidades',
-      skillFrontend: 'Frontend',
-      skillFrontendDesc: 'React, HTML/CSS, interfaces responsivas y accesibles',
-      skillBackend: 'Backend',
-      skillBackendDesc: 'Node.js, REST APIs, autenticación y bases de dados',
-      skillMobile: 'Mobile',
-      skillMobileDesc: 'Flutter y React Native para iOS y Android',
-      skillDatabase: 'Base de datos',
-      skillDatabaseDesc: 'PostgreSQL, MongoDB, modelado y optimización',
-      projectsLabel: 'Portfolio',
-      projectsTitle: 'Proyectos destacados',
-      projectEcommerceTitle: 'Plataforma de reservas de Alojamiento Local',
-      projectEcommerceDesc: 'Sitio web para consulta y reserva de habitaciones, pagos y panel de gestión para el vendedor. Desarrollado desde cero con un enfoque en el rendimiento y la experiencia de usuario (UX).',
-      projectHabitsTitle: 'App de Hábitos',
-      projectHabitsDesc: 'Aplicación móvil para seguimiento de hábitos con notificaciones y estadísticas.',
-      projectApiTitle: 'API de Gestión',
-      projectApiDesc: 'API RESTful con autenticación JWT para sistema de gestión de clientes.',
-      aboutLabel: 'Sobre mí',
-      aboutTitle: 'Quién soy',
-      aboutPara1: 'Soy Filipe Braz, finalizando la licenciatura en Informática y apasionado por crear productos digitales desde cero.',
-      aboutPara2: 'Tengo experiencia tanto en web fullstack como en desarrollo móvil, lo que me permite entregar soluciones completas.',
-      aboutPara3: 'Busco proyectos freelance donde pueda crear valor real para negocios y personas.',
-      statExperience: 'años de experiencia',
-      statProjects: 'proyectos completados',
-      statPlatforms: 'plataformas móviles',
-      statCheese: 'queso consumido',
-      contactLabel: 'Trabajemos juntos',
-      contactTitle: '¿Tienes un proyecto en mente?',
-      contactText: 'Estoy disponible para proyectos freelance — web, móvil o fullstack. Contáctame sin compromiso.',
-      contactLinkedIn: '💼 LinkedIn',
-      contactGitHub: '🐙 GitHub',
-      footerCopyright: '© 2026 Filipe Braz - rfcb solutions',
-      footerMadeWith: 'Hecho con código & queso 🧀',
-      modalTitle: 'Contactar',
-      placeholderName: 'Nombre completo',
-      placeholderContact: 'Email',
-      placeholderSubject: 'Asunto',
-      placeholderMessage: 'Mensaje',
-      modalSend: 'Enviar',
-      modalClose: 'Cerrar',
-      formFillAll: 'Por favor complete todos los campos antes de enviar.'
-    }
-  };
-
-  // 1. Função de tradução atualizada (com a mudança da tag HTML lang incluída)
-  function applyTranslations(lang) {
-    var t = translations[lang] || translations['pt'];
-
-    document.documentElement.lang = lang; // Importante para SEO e Acessibilidade
-
-    // Text content
-    document.querySelectorAll('[data-i18n]').forEach(function(el) {
-      var key = el.getAttribute('data-i18n');
-      if(t[key]) el.textContent = t[key];
-    });
-
-    // Placeholders
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
-      var key = el.getAttribute('data-i18n-placeholder');
-      if(t[key]) el.setAttribute('placeholder', t[key]);
-    });
-  }
-
-  // 2. Ler o idioma do URL no carregamento inicial (ex: rfcb.pt/?lang=en)
-  var urlParams = new URLSearchParams(window.location.search);
-  var langFromUrl = urlParams.get('lang');
-  
-  // 3. Definir o idioma (URL tem prioridade, senão usa PT)
-  var defaultLang = langFromUrl || 'pt';
-  
-  // 4. Atualizar os botões visualmente no carregamento
-  document.querySelectorAll('.lang-btn').forEach(function(b) { 
-    b.classList.remove('active'); 
-    if (b.getAttribute('data-lang') === defaultLang) {
-      b.classList.add('active');
-    }
-  });
-
-  // Aplica as traduções iniciais
-  applyTranslations(defaultLang);
-
-  // 5. O que acontece quando clicas num botão de idioma
-  document.querySelectorAll('.lang-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      var selectedLang = btn.getAttribute('data-lang');
-      
-      // Muda a classe ativa
-      document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-      
-      // Aplica o texto
-      applyTranslations(selectedLang);
-
-      // ATUALIZA O URL SILENCIOSAMENTE SEM RECARREGAR A PÁGINA
-      var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?lang=' + selectedLang;
-      window.history.pushState({ path: newUrl }, '', newUrl);
-    });
-  });
-
-  window.translateText = function(key) {
-    var lang = document.querySelector('.lang-btn.active')?.getAttribute('data-lang') || 'pt';
-    return translations[lang]?.[key] || translations['pt']?.[key] || key;
-  };
-})();
-</script>
+<script src="/translations.js" defer></script>
+<script src="/script.js" defer></script>
 </body>
 </html>

@@ -1,39 +1,34 @@
 # Meu Portfolio
 
-Esta pasta contém o site e um backend Node.js para envio de mensagens de contacto de forma segura.
+Site estático de Filipe Braz, publicado em [www.rfcb.pt](https://www.rfcb.pt) através da Vercel. Não tem backend nem passo de build.
 
-## Como usar
+## Estrutura
 
-1. Copie `.env.example` para `.env`.
-2. Preencha os valores com as credenciais SMTP do seu serviço de email.
-3. Instale dependências:
+- `index.html`: conteúdo da página
+- `styles.css`: estilos
+- `script.js`: idioma, menu mobile, janela de contacto e envio do formulário
+- `translations.js`: textos em PT, EN, DE e ES
+- `fonts/`: fontes Syne e DM Sans (licença OFL), alojadas no próprio site
+- `vercel.json`: cabeçalhos de segurança, incluindo o CSP
+- `banner.html`: fonte da imagem `og-image.png`; não é publicado (ver `.vercelignore`)
 
-```bash
-npm install
-```
-
-4. Execute o servidor:
-
-```bash
-npm start
-```
-
-5. Abra o browser em:
+## Correr localmente
 
 ```bash
-http://localhost:3000
+npx serve .
 ```
 
-## Segurança
+## Formulário de contacto
 
-O `index.html` não contém nenhuma senha. As credenciais SMTP ficam apenas no arquivo `.env`, que não deve ser versionado.
+O formulário envia as mensagens através da [Web3Forms](https://web3forms.com). A `access_key` no `index.html` é pública por natureza e não é uma password.
 
-## Variáveis de ambiente
+A proteção contra spam usa o hCaptcha, com a sitekey partilhada que a Web3Forms indica para o plano gratuito. O script só é carregado quando alguém abre o formulário. Para o captcha ser exigido no servidor, tem de estar ativo no painel da Web3Forms, em **Block Spam**.
 
-- `SMTP_HOST`
-- `SMTP_PORT`
-- `SMTP_SECURE` (`true` ou `false`)
-- `SMTP_USER`
-- `SMTP_PASS`
-- `FROM_EMAIL`
-- `TO_EMAIL`
+## Ativar o botão do CV
+
+1. Coloca o ficheiro na raiz do projeto com o nome `cv.pdf`.
+2. Em `index.html`, remove o atributo `hidden` do link `Download CV`.
+
+## Cabeçalhos de segurança
+
+O CSP só permite scripts e estilos alojados no próprio site ou servidos pelo hCaptcha. Um serviço externo novo, ou CSS e JS diretamente no HTML, obriga a atualizar o `vercel.json`.
