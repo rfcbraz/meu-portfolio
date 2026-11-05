@@ -88,6 +88,7 @@
       window.hcaptcha.remove(captchaId);
       renderCaptcha();
     }
+    document.dispatchEvent(new CustomEvent('site:language'));
   }
 
   document.querySelectorAll('.lang-btn').forEach(function (btn) {
@@ -184,6 +185,7 @@
     modal.classList.add('show');
     modal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
+    document.dispatchEvent(new CustomEvent('site:modal', { detail: { open: true } }));
     form.elements.name.focus();
     loadCaptcha();
   }
@@ -198,6 +200,7 @@
     modal.classList.remove('show');
     modal.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('modal-open');
+    document.dispatchEvent(new CustomEvent('site:modal', { detail: { open: false } }));
     // O link do menu mobile já pode estar escondido; nesse caso volta ao botão do menu.
     var target = lastFocused && lastFocused.offsetParent !== null ? lastFocused : navToggle;
     target.focus();

@@ -7,8 +7,12 @@ Site estático de Filipe Braz, publicado em [www.rfcb.pt](https://www.rfcb.pt) a
 - `index.html`: conteúdo da página
 - `styles.css`: estilos
 - `script.js`: idioma, menu mobile, janela de contacto e envio do formulário
+- `motion.js`: scroll suave, animações, cores das secções e percurso do queijo
+- `cheese.js`: queijo 3D desenhado num shader WebGL, sem modelos nem texturas
+- `cheese.webp`: imagem do queijo, usada quando o WebGL não está disponível e na imagem de partilha
+- `vendor/`: GSAP, ScrollTrigger e Lenis, alojados no próprio site
 - `translations.js`: textos em PT, EN, DE e ES
-- `fonts/`: fontes Syne e DM Sans (licença OFL), alojadas no próprio site
+- `fonts/`: fontes Bricolage Grotesque, Instrument Serif, DM Sans e JetBrains Mono (licença OFL), alojadas no próprio site
 - `vercel.json`: cabeçalhos de segurança, incluindo o CSP
 - `banner.html`: fonte da imagem `og-image.png`; não é publicado (ver `.vercelignore`)
 
