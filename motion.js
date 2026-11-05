@@ -100,10 +100,39 @@
         scrollTrigger: { trigger: title, start: 'top 88%', once: true }
       });
     });
-    gsap.utils.toArray('[data-reveal]').forEach(function (el) {
-      gsap.from(el, {
-        y: 46, autoAlpha: 0, duration: 0.8, ease: 'power3.out',
-        scrollTrigger: { trigger: el, start: 'top 92%', once: true }
+    // Cartões e textos entram de fora do ecrã, ligados ao scroll, cada um pelo lado mais próximo.
+    var slideGroups = [
+      '#skills .section-label', '.skill-card',
+      '#projects .section-label', '.project-card',
+      '#about .section-label', '.about-text p', '.stat-card'
+    ];
+    var alternate = 0;
+    slideGroups.forEach(function (selector) {
+      gsap.utils.toArray(selector).forEach(function (el, index) {
+        var fallbackSide = alternate++ % 2 === 0 ? -1 : 1;
+        function sideOf() {
+          var offCentre = el.offsetLeft + el.offsetWidth / 2 - window.innerWidth / 2;
+          // Elementos centrados ou a toda a largura não têm lado próximo: alternam.
+          if (Math.abs(offCentre) < window.innerWidth * 0.06) return fallbackSide;
+          return offCentre < 0 ? -1 : 1;
+        }
+        gsap.fromTo(el, {
+          x: function () {
+            return sideOf() < 0 ? -(el.offsetLeft + el.offsetWidth + 40) : window.innerWidth - el.offsetLeft + 40;
+          },
+          rotation: function () { return sideOf() * 7; }
+        }, {
+          x: 0,
+          rotation: 0,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top bottom',
+            end: 'top ' + (76 - (index % 4) * 4) + '%',
+            scrub: 0.6,
+            invalidateOnRefresh: true
+          }
+        });
       });
     });
     gsap.utils.toArray('.stat-num[data-count]').forEach(function (el) {

@@ -258,9 +258,9 @@ h2 {
   background: var(--card); color: var(--card-fg);
   border: 2px solid var(--fg); border-radius: 20px;
   padding: 1.6rem;
-  transition: background-color 0.2s, color 0.2s, transform 0.2s;
+  transition: background-color 0.2s, color 0.2s, translate 0.2s, rotate 0.2s;
 }
-.skill-card:hover { background: var(--cheese); color: var(--ink); transform: rotate(-1.2deg) translateY(-4px); }
+.skill-card:hover { background: var(--cheese); color: var(--ink); rotate: -1.2deg; translate: 0 -4px; }
 .skill-icon { font: 700 1.3rem var(--mono); margin-bottom: 3.5rem; }
 .skill-name { font-family: var(--display); font-weight: 800; font-stretch: 75%; font-size: 2rem; text-transform: uppercase; margin-bottom: 0.4rem; }
 .skill-desc { font-size: 0.95rem; line-height: 1.5; }
@@ -273,13 +273,13 @@ h2 {
   min-height: 26rem;
   border-radius: 24px; padding: clamp(1.4rem, 3vw, 2.5rem);
   color: var(--ink);
-  transition: transform 0.35s cubic-bezier(.2,.8,.2,1);
+  transition: translate 0.35s cubic-bezier(.2,.8,.2,1), rotate 0.35s cubic-bezier(.2,.8,.2,1);
 }
 .project-card:nth-child(1) { background: var(--cheese); }
 .project-card:nth-child(2) { background: var(--tomato); }
 .project-card:nth-child(3) { background: var(--cream); }
 .project-card.has-link { cursor: pointer; }
-.project-card:hover { transform: translateY(-6px) rotate(-0.6deg); }
+.project-card:hover { translate: 0 -6px; rotate: -0.6deg; }
 .project-card.featured { grid-column: 1 / -1; min-height: 30rem; }
 .project-num { font: 500 0.95rem var(--mono); }
 .project-code {
@@ -397,5 +397,5 @@ footer {
   body, .nav-links, .lang-switcher, .nav-cta { transition: none; }
   .ticker-inner, html.motion .ticker-inner, .dot { animation: none; }
   .skill-card,.project-card, .project-arrow { transition: none; }
-  .skill-card:hover, .project-card:hover { transform: none; }
+  .skill-card:hover, .project-card:hover { translate: none; rotate: none; }
 }
